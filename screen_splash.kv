@@ -1,0 +1,56 @@
+#:kivy 2.1.0
+
+<ScreenSplash>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: 100 , 50
+        MDLabel:
+            text: 'Water Dispenser Machine'
+            halign: 'center'
+            valign: 'middle'
+            font_size: 64
+            padding: 10 , 10
+            bold: True
+            size_hint_y: 0.2
+            color: 0, 0, 0
+
+        MDBoxLayout:
+            orientation: 'horizontal'
+            padding: 25 , 25
+            size_hint_y: 0.15
+
+            Image:
+                id: logo
+                source:'asset/Secondary_Logo.png'
+                allow_stretch: True
+
+        MDLabel:
+            text: ''
+            size_hint_y: 0.03
+
+        MDProgressBar:
+            id: progress_bar
+            size_hint_y: .03
+            max: 100
+            value: 1
+
+        MDLabel:
+            id: progress_bar_label
+            text: 'Loading.. [0 %]'
+            halign: 'center'
+            valign: 'middle'
+            font_size: 50
+            padding: 2 , 2
+            bold: 'true'
+            size_hint_y: .1
+            color: 0, 0, 0
+
+        MDLabel:
+            text: 'Developed by Kick Your Plast Team, Copyrights @2023'
+            halign: 'center'
+            valign: 'middle'
+            font_size: 30
+            padding: 2 , 2
+            bold: 'true'
+            size_hint_y: .1
+            color: 0, 0, 0

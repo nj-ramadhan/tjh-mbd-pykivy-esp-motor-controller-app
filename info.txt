@@ -1,0 +1,13 @@
+Water Refill Station KickYourPlast akan membantu memenuhi kebutuhan air minum kamu tanpa harus nyampah.
+
+Cara penggunaan :
+1. Download Aplikasi KickYourPlast di App Store atau Google Play
+2. Klik Daftar Akun
+3. Isi data secara lengkap
+4. Pilih volume dan jenis air minum pada pilhan menu
+5. Lakukan Pembayaran melalui Gopay, ShoppeePay atau QRIS
+6. Jika sudah, kamu akan mendapatkan QR Code
+7. Scan QR Code pada Water Refill Station terdekat
+8. Atur ketinggian area pengisian tumbler
+9. Simpan tumbler pada area pengisian dan tekan tombol mulai pada touchscreen
+10. Tunggu sampai pengisian selesai

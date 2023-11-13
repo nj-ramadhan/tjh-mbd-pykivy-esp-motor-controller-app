@@ -1,0 +1,91 @@
+#:kivy 2.1.0
+
+<ScreenOperate>:
+    MDBoxLayout:
+        orientation: "vertical"
+		# header layout
+        MDBoxLayout:
+            id: layout_header
+            orientation: "horizontal"
+            padding: 20
+			spacing: 50
+			size_hint: 2, 0.15
+
+			MDLabel:
+				id: subtitle            
+				text: "WATER DISPENSER MACHINE"
+				halign: 'center'
+				valign: 'middle'
+				bold: True
+				font_size: 32
+				color: 0, 0, 0
+                    
+            Image:
+                id: logo
+                source:'asset/Main_Logo.png'
+                size_hint_x: 0.25
+                allow_stretch: True                   
+
+
+		# choose product layout
+		MDBoxLayout:
+			id: layout_title
+			orientation: "vertical"
+			md_bg_color: app.theme_cls.primary_color
+			size_hint: 2, 0.1
+			padding:10
+			spacing:10
+
+			MDLabel:
+				text: "MOVE THE BASE TO FIT YOUR TUMBLER"
+				halign: 'center'
+				valign: 'middle'    
+				bold: True
+				font_size: 24
+				color: 1, 1, 1
+				size_hint_y: 0.1
+
+		MDBoxLayout:
+			id: layout_info
+			orientation: "vertical"
+			md_bg_color: app.theme_cls.accent_color
+			size_hint_y: 0.75
+			padding:10
+			spacing:10
+
+	MDRelativeLayout:
+		MDFillRoundFlatIconButton:
+			id: bt_move_up
+			icon: "arrow-up"
+			text: "UP"
+			font_size: 28
+			size_hint: 0.4, 0.1
+			pos_hint: {"center_x": -0.5, "center_y": .45}
+			on_press: root.move_up()
+
+		MDFillRoundFlatIconButton:
+			id: bt_move_down
+			icon: "arrow-down"
+			text: "DOWN"
+			font_size: 28
+			size_hint: 0.4, 0.1
+			pos_hint: {"center_x": -0.5, "center_y": .15}
+			on_press: root.move_down()
+
+		MDFillRoundFlatIconButton:
+			id: bt_fill_start
+			icon: "play"
+			text: "START"
+			font_size: 28
+			size_hint: 0.4, 0.1
+			pos_hint: {"center_x": .5, "center_y": .45}
+			on_press: root.fill_start()
+
+		MDFillRoundFlatIconButton:
+			id: bt_fill_stop
+			icon: "stop"
+			text: "STOP"
+			font_size: 28
+			size_hint: 0.4, 0.1
+			pos_hint: {"center_x": .5, "center_y": .15}
+			on_press: root.fill_stop()

@@ -1,0 +1,102 @@
+#:kivy 2.1.0
+
+<ScreenChoosePayment>:
+    MDBoxLayout:
+        orientation: "vertical"
+		# header layout
+        MDBoxLayout:
+            id: layout_header
+            orientation: "horizontal"
+            padding: 20
+			spacing: 50
+			size_hint: 2, 0.15
+
+			MDLabel:
+				id: subtitle            
+				text: "WATER DISPENSER MACHINE"
+				halign: 'center'
+				valign: 'middle'
+				bold: True
+				font_size: 32
+				color: 0, 0, 0
+                    
+            Image:
+                id: logo
+                source:'asset/Main_Logo.png'
+                size_hint_x: 0.25
+                allow_stretch: True                   
+
+
+		# choose product layout
+		MDBoxLayout:
+			id: layout_title
+			orientation: "vertical"
+			md_bg_color: app.theme_cls.primary_color
+			size_hint: 2, 0.1
+			padding:10
+			spacing:10
+
+			MDLabel:
+				text: "CHOOSE PAYMENT METHOD"
+				halign: 'center'
+				valign: 'middle'    
+				bold: True
+				font_size: 24
+				color: 1, 1, 1
+				size_hint_y: 0.1
+				
+		MDGridLayout:
+			id: layout_products
+			cols:3
+			md_bg_color: app.theme_cls.accent_color
+			row_force_default: True
+			row_default_height: 200
+			size_hint: 2, 0.75
+			padding:20
+			spacing:20
+
+			MDCard:
+				id: payment_gopay
+				ripple_behavior: True
+				on_press: root.pay("GOPAY")
+
+				MDRelativeLayout:
+					Image:
+						source:'asset/Logo_Gopay.png'
+						pos_hint: {"center_x": .5, "center_y": .5}
+						allow_stretch: True 
+
+					MDLabel:
+						text: "GOPAY"
+						adaptive_size: True
+						pos: "12dp", "12dp"
+						bold: True
+
+
+			MDCard:
+				id: payment_direct
+				ripple_behavior: True
+				on_press: root.pay("QRIS")
+
+				MDRelativeLayout:
+					Image:
+						source:'asset/Logo_QRIS.png'
+						pos_hint: {"center_x": .5, "center_y": .5}
+						allow_stretch: True 
+
+					MDLabel:
+						text: "QRIS"
+						adaptive_size: True
+						pos: "12dp", "12dp"
+						bold: True
+
+	MDRelativeLayout:
+		MDFillRoundFlatIconButton:
+			id: bt_screen_choose_product
+			icon: "cancel"
+			text: "CANCEL"
+			font_size: 28
+			size_hint: 0.4, 0.1
+			pos_hint: {"center_x": .8, "center_y": .1}
+			on_press: root.screen_choose_product()
+				
