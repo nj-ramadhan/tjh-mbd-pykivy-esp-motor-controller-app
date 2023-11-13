@@ -37,15 +37,21 @@ qr = qrcode.QRCode(
 
 colors = {
     "Blue": {
-        "200": "#A3D8DD",
-        "500": "#A3D8DD",
-        "700": "#A3D8DD",
+        "200": "#1c74bb",
+        "500": "#1c74bb",
+        "700": "#1c74bb",
     },
 
-    "BlueGray": {
-        "200": "#09343C",
-        "500": "#09343C",
-        "700": "#09343C",
+    "Orange": {
+        "200": "#f08421",
+        "500": "#f08421",
+        "700": "#f08421",
+    },
+
+    "Gray": {
+        "200": "#bbbbbb",
+        "500": "#bbbbbb",
+        "700": "#bbbbbb",
     },
 
     "Light": {
@@ -213,7 +219,7 @@ class ScreenSplash(MDBoxLayout):
             self.ids.progress_bar.value = 100
             self.ids.progress_bar_label.text = 'Loading.. [{:} %]'.format(100)
             time.sleep(0.5)
-            self.screen_manager.current = 'screen_choose_product'
+            self.screen_manager.current = 'screen_choose_screen'
             return False
 
     def regular_check(self, *args):
@@ -286,11 +292,11 @@ class ScreenSplash(MDBoxLayout):
         #     except Exception as e:
         #         print(e)
 
-class ScreenChooseProduct(MDBoxLayout):
+class ScreenChooseScreen(MDBoxLayout):
     screen_manager = ObjectProperty(None)
 
     def __init__(self, **kwargs):
-        super(ScreenChooseProduct, self).__init__(**kwargs)
+        super(ScreenChooseScreen, self).__init__(**kwargs)
         Clock.schedule_interval(self.regular_check, .1)
         
         try :
@@ -304,9 +310,9 @@ class ScreenChooseProduct(MDBoxLayout):
         global cold
         cold = value
 
-    def choose_payment(self, size, id, price):
+    def uno_modules(self, size, id, price):
         global product, idProduct, productPrice
-        self.screen_manager.current = 'screen_choose_payment'
+        self.screen_manager.current = 'screen_uno_modules'
         product = size
         idProduct = id
         productPrice = price
@@ -325,6 +331,12 @@ class ScreenChooseProduct(MDBoxLayout):
         else:
             self.ids.bt_cold.md_bg_color = "#09343C"
             self.ids.bt_normal.md_bg_color = "#3C9999"       
+
+class ScreenDatalogHistory(MDBoxLayout):
+    screen_manager = ObjectProperty(None)
+
+    def __init__(self, **kwargs):
+        super(ScreenDatalogHistory, self).__init__(**kwargs)
 
 class ScreenChoosePayment(MDBoxLayout):
     screen_manager = ObjectProperty(None)
@@ -422,14 +434,14 @@ class ScreenChoosePayment(MDBoxLayout):
 
             elif (r.json()['data']['payment_status'] != 'pending'):
                 toast("payment failed")
-                self.screen_manager.current = 'screen_choose_product'
+                self.screen_manager.current = 'screen_choose_screen'
                 Clock.unschedule(self.payment_check)
                 
         except Exception as e:
             print(e)
 
-    def screen_choose_product(self):
-        self.screen_manager.current = 'screen_choose_product'
+    def screen_choose_screen(self):
+        self.screen_manager.current = 'screen_choose_screen'
 
 class ScreenOperate(MDBoxLayout):
     screen_manager = ObjectProperty(None)
@@ -469,7 +481,7 @@ class ScreenOperate(MDBoxLayout):
 
         print("fill stop")
         toast("thank you for decreasing plastic bottle trash by buying our product")
-        self.screen_manager.current = 'screen_choose_product'
+        self.screen_manager.current = 'screen_choose_screen'
 
     def regular_check(self, *args):
         global pulse, product, pulsePerMiliLiter, in_limit_closed, in_limit_opened, in_sensor_proximity, out_pump_cold, out_pump_normal, stepperAct
@@ -504,7 +516,7 @@ class ScreenQRPayment(MDBoxLayout):
         pass
 
     def cancel(self):
-        self.screen_manager.current = 'screen_choose_product'
+        self.screen_manager.current = 'screen_choose_screen'
 
     def dummy_success(self):
         self.screen_manager.current = 'screen_operate' 
@@ -515,8 +527,8 @@ class ScreenInfo(MDBoxLayout):
     def __init__(self, **kwargs):
         super(ScreenInfo, self).__init__(**kwargs)
 
-    def screen_choose_product(self):
-        self.screen_manager.current = 'screen_choose_product'
+    def screen_choose_screen(self):
+        self.screen_manager.current = 'screen_choose_screen'
 
     def screen_maintenance(self):
         self.screen_manager.current = 'screen_maintenance'      
@@ -635,7 +647,7 @@ class ScreenMaintenance(MDBoxLayout):
         if (not DEBUG) : out_motor_linear.stop()
 
     def exit(self):
-        self.screen_manager.current = 'screen_choose_product'
+        self.screen_manager.current = 'screen_choose_screen'
 
     def regular_check(self, *args):
         global levelColdTank, levelMainTank, levelNormalTank
@@ -677,14 +689,14 @@ class ScreenMaintenance(MDBoxLayout):
             self.ids.bt_open.md_bg_color = "#09343C"
             self.ids.bt_close.md_bg_color = "#3C9999"
 
-class WaterDispenserMachineApp(MDApp):
+class ESPMotorControllerApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def build(self):
         self.theme_cls.colors = colors
-        self.theme_cls.primary_palette = "BlueGray"
-        self.theme_cls.accent_palette = "Blue"
+        self.theme_cls.primary_palette = "Blue"
+        self.theme_cls.accent_palette = "Gray"
         self.icon = 'asset/Icon_Logo.png'
         Window.fullscreen = 'auto'
         Window.borderless = True
@@ -697,4 +709,4 @@ class WaterDispenserMachineApp(MDApp):
 
 
 if __name__ == '__main__':
-    WaterDispenserMachineApp().run()
+    ESPMotorControllerApp().run()

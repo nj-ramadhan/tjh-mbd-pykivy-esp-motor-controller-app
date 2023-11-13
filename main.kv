@@ -2,8 +2,8 @@
 
 #:import NoTransition kivy.uix.screenmanager.NoTransition
 #:include screen_splash.kv
-#:include screen_choose_product.kv
-#:include screen_choose_payment.kv
+#:include screen_choose_screen.kv
+#:include screen_uno_modules.kv
 #:include screen_info.kv
 #:include screen_operate.kv
 #:include screen_maintenance.kv
@@ -17,19 +17,25 @@ ScreenManager:
         ScreenSplash:
             app_window: app
             screen_manager: screen_manager
-            screen_choose_product: screen_choose_product
+            screen_choose_screen: screen_choose_screen
 
     Screen:
-        name: 'screen_choose_product'
-        ScreenChooseProduct:
-            id: screen_choose_product
+        name: 'screen_choose_screen'
+        ScreenChooseScreen:
+            id: screen_choose_screen
             screen_manager: screen_manager
-            screen_choose_payment: screen_choose_payment
+            screen_uno_modules: screen_uno_modules
 
     Screen:
-        name: 'screen_choose_payment'
+        name: 'screen_uno_modules'
         ScreenChoosePayment:
-            id: screen_choose_payment
+            id: screen_uno_modules
+            screen_manager: screen_manager
+
+    Screen:
+        name: 'screen_datalog_history'
+        ScreenDatalogHistory:
+            id: screen_datalog_history
             screen_manager: screen_manager
 
     Screen:

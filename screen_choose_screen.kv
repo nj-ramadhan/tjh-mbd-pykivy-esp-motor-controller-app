@@ -1,0 +1,135 @@
+#:kivy 2.1.0
+<ScreenChooseScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+		# header layout
+        MDBoxLayout:
+            id: layout_header
+            orientation: "horizontal"
+            padding: 20
+			spacing: 50
+			size_hint: 1, 0.15
+
+			MDLabel:
+				id: subtitle            
+				text: "UNO MOTOR CONTROLLER"
+				halign: 'center'
+				valign: 'middle'
+				bold: True
+				font_size: 32
+				color: 0, 0, 0
+                    
+            Image:
+                id: logo
+                source:'asset/Main_Logo.png'
+                size_hint_x: 0.25
+                allow_stretch: True                   
+
+
+		MDGridLayout:
+			id: layout_products
+			cols:3
+			md_bg_color: app.theme_cls.accent_color
+			row_force_default: True
+			row_default_height: 200
+			size_hint: 1, 0.85
+			padding:100
+			spacing:80
+
+			MDCard:
+				id: product_220ml
+				ripple_behavior: True
+				on_press: root.uno_modules(220,1,1000)
+
+				MDLabel:
+					text: "UNO MODULES"
+					halign: 'center'
+					valign: 'middle'
+					font_size: 48
+					bold: True
+
+			MDCard:
+				id: product_330ml
+				ripple_behavior: True
+				on_press: root.uno_modules(330,2,1500)
+
+				MDLabel:
+					text: "UNO SETUP"
+					halign: 'center'
+					valign: 'middle'
+					font_size: 48
+					bold: True
+
+			MDCard:
+				id: product_600ml
+				ripple_behavior: True
+				on_press: root.uno_modules(600,3,2500)
+
+				MDLabel:
+					text: "DATALOG & HISTORY"
+					halign: 'center'
+					valign: 'middle'
+					font_size: 48
+					bold: True
+
+			MDCard:
+				id: product_1000ml
+				ripple_behavior: True
+				on_press: root.uno_modules(1000,4,3500)
+
+				MDLabel:
+					text: "ANALOG SETUP & DISPLAY"
+					halign: 'center'
+					valign: 'middle'
+					font_size: 48
+					bold: True
+
+			MDCard:
+				id: product_1000ml
+				ripple_behavior: True
+				on_press: root.uno_modules(1000,4,3500)
+
+				MDLabel:
+					text: "STATUS"
+					halign: 'center'
+					valign: 'middle'
+					font_size: 48
+					bold: True
+
+			MDCard:
+				id: product_1000ml
+				ripple_behavior: True
+				on_press: root.uno_modules(1000,4,3500)
+
+				MDLabel:
+					text: "FAULT & ALARM"
+					halign: 'center'
+					valign: 'middle'
+					font_size: 48
+					bold: True
+
+			MDCard:
+				id: product_1000ml
+				ripple_behavior: True
+				on_press: root.uno_modules(1000,4,3500)
+
+				MDLabel:
+					text: "SCADA & SECURITY"
+					halign: 'center'
+					valign: 'middle'
+					font_size: 48
+					bold: True
+
+			MDCard:
+				id: product_1000ml
+				ripple_behavior: True
+				on_press: root.uno_modules(1000,4,3500)
+
+				MDLabel:
+					text: "LOGIC FUNCTION"
+					halign: 'center'
+					valign: 'middle'
+					font_size: 48
+					bold: True
+
+				
