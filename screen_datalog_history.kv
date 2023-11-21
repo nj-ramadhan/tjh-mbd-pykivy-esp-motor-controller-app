@@ -11,10 +11,11 @@
 			spacing: 50
 			size_hint: 1, 0.15
 
-			MDRoundFlatIconButton:
+			MDIconButton:
 				id: bt_menu
 				icon: "menu"
-				size_hint_x: 0.25
+				icon_size: "64sp"
+				size_hint_x: 0.1
 				on_press: root.nav_main_menu()
 
 			MDLabel:
@@ -23,7 +24,7 @@
 				halign: 'center'
 				valign: 'middle'
 				bold: True
-				font_size: 32
+				font_size: 42
 				color: 0, 0, 0
                     
             Image:

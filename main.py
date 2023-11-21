@@ -108,6 +108,12 @@ class ScreenMainMenu(MDBoxLayout):
     def __init__(self, **kwargs):
         super(ScreenMainMenu, self).__init__(**kwargs)
 
+    def nav_uno_modules(self):
+        self.screen_manager.current = 'screen_uno_modules'
+
+    def nav_uno_setup(self):
+        self.screen_manager.current = 'screen_uno_setup'
+
     def nav_datalog_history(self):
         self.screen_manager.current = 'screen_datalog_history'
 
@@ -119,6 +125,24 @@ class ScreenMainMenu(MDBoxLayout):
 
     def nav_info(self):
         self.screen_manager.current = 'screen_info'      
+
+class ScreenUnoModules(MDBoxLayout):
+    screen_manager = ObjectProperty(None)
+
+    def __init__(self, **kwargs):
+        super(ScreenUnoModules, self).__init__(**kwargs)
+
+    def nav_main_menu(self):
+        self.screen_manager.current = 'screen_main_menu'
+
+class ScreenUnoSetup(MDBoxLayout):
+    screen_manager = ObjectProperty(None)
+
+    def __init__(self, **kwargs):
+        super(ScreenUnoSetup, self).__init__(**kwargs)
+
+    def nav_main_menu(self):
+        self.screen_manager.current = 'screen_main_menu'
 
 class ScreenDatalogHistory(MDBoxLayout):
     screen_manager = ObjectProperty(None)
@@ -167,11 +191,10 @@ class ScreenDatalogHistory(MDBoxLayout):
             rows_num=4,
             column_data=[
                 ("No.", dp(10)),
-                ("Volt [V]", dp(27)),
-                ("Curr [mA]", dp(27)),
-                ("Resi [kOhm]", dp(27)),
-                ("Std Dev Res", dp(27)),
-                ("IP (R decay)", dp(27)),
+                ("Avg. Volt [V]", dp(27)),
+                ("Avg. Curr [A]", dp(27)),
+                ("Unbal. Volt [%]", dp(27)),
+                ("Unbal. Curr [%]", dp(27)),
             ],
         )
         layout.add_widget(self.data_tables)
@@ -204,110 +227,6 @@ class ScreenDatalogHistory(MDBoxLayout):
     def nav_info(self):
         self.screen_manager.current = 'screen_info' 
 
-class ScreenChoosePayment(MDBoxLayout):
-    screen_manager = ObjectProperty(None)
-
-    def __init__(self, **kwargs):
-        super(ScreenChoosePayment, self).__init__(**kwargs)
-
-    def pay(self, method):
-        global qr, qrSource, product, idProduct, cold, productPrice
-
-        print(method)
-        try:
-            if(method=="GOPAY"):
-                # ..... create transaction
-                qrSource = self.create_transaction(
-                    machine_code=MACHINE_CODE,
-                    method='gopay',
-                    product_id=idProduct,
-                    product_size=product,
-                    qty=1,
-                    price=productPrice,
-                    product_type="cold" if (cold) else "normal",
-                    # phone=self.phone
-                )
-
-                f = open('qr_payment.png', 'wb')
-                f.write(requests.get(qrSource).content)
-                f.close
-
-                self.screen_manager.current = 'screen_qr_payment'
-                print("payment qris")
-
-                # .... scheduling payment check
-                # Clock.schedule_interval(self.payment_check, 1)
-                toast("successfully pay with GOPAY")
-
-            elif(method=="QRIS"):
-                # ..... create transaction
-                qrSource = self.create_transaction(
-                    machine_code=MACHINE_CODE,
-                    method='qris',
-                    product_id=idProduct,
-                    product_size=product,
-                    qty=1,
-                    price=productPrice,
-                    product_type="cold" if (cold) else "normal",
-                    # phone=self.phone
-                )
-                
-                time.sleep(0.1)
-                qr.add_data(qrSource)
-                qr.make(fit=True)
-
-                img = qr.make_image(back_color=(255, 255, 255), fill_color=(55, 95, 100))
-                img.save("qr_payment.png")
-
-                self.screen_manager.current = 'screen_qr_payment'
-                print("payment qris")
-
-                # .... scheduling payment check
-                # Clock.schedule_interval(self.payment_check, 1)
-                toast("successfully pay with QRIS")
-        except:
-            print("payment error")
-
-    def create_transaction(self, method, machine_code, product_id, product_size, qty, price, product_type, phone='-'):
-        try :
-            r = requests.post(SERVER + 'machine_transactions', json={
-                "payment_method": method,
-                "machine_code": machine_code,
-                "phone": phone,
-                "items": [
-                    {
-                        "product_id": product_id,
-                        "qty": qty,
-                        "size": product_size,
-                        "unit_price": price,
-                        "drink_type": product_type
-                    }
-                ]
-            })
-            # print(r.json()['data'])
-            return r.json()['data']['payment_response_parameter']['qr_string'] if (method == 'qris') else r.json()['data']['payment_response_parameter']['actions'][0]['url']
-        except Exception as e:
-            print(e)
-    
-    def payment_check(self):
-        try :
-            r = requests.get(SERVER + 'machine_transactions/' + self.transaction_id)
-            
-            if (r.json()['data']['payment_status'] == 'success'):
-                toast('payment success')
-                self.screen_manager.current = 'screen_operate'
-                Clock.unschedule(self.payment_check)
-
-            elif (r.json()['data']['payment_status'] != 'pending'):
-                toast("payment failed")
-                self.screen_manager.current = 'screen_main_menu'
-                Clock.unschedule(self.payment_check)
-                
-        except Exception as e:
-            print(e)
-
-    def screen_main_menu(self):
-        self.screen_manager.current = 'screen_main_menu'
 
 class ScreenOperate(MDBoxLayout):
     screen_manager = ObjectProperty(None)
@@ -573,50 +492,50 @@ class ScreenAmpChart(MDBoxLayout):
 
 
     def delayed_init(self, dt):
-        try:
-            self.n = 115
-            self.a = 0
-            self.data = np.random.uniform(100.0, 200.0, self.n)
-            self.angle = np.arange(0, self.n, 1)
-            self.theta = np.pi * np.deg2rad(self.angle)
+        # try:
+        self.n = 115
+        self.a = 0
+        self.data = np.random.uniform(100.0, 200.0, self.n)
+        self.data_angle = np.arange(0, self.n, 1)
+        self.theta = np.pi * np.deg2rad(self.data_angle)
 
-            # self.show_theta = np.array([])
-            # self.show_data = np.array([])
+        # self.show_theta = np.array([])
+        # self.show_data = np.array([])
 
-            self.fig, self.ax = plt.subplots(polar=True)
+        # self.fig, self.ax = plt.subplots(polar=True)
 
-            # self.fig = plt.figure()
-            # self.ax = self.fig.add_subplot(111, polar=True)
-            self.ax.set_theta_offset(np.pi / 2)
-            self.ax.set_theta_direction(-1)
-            self.ax.set_rmax(200)
-            self.ax.set_xticklabels([
-                r'$day 1$',
-                r'$day 2$',
-                r'$day 3$',
-                r'$day 4$',
-                r'$day 5$',
-                r'$day 6$',
-                r'$day 7$',
-                r'$day 8$',
-                ])
-            # self.ax.grid(True)
-            self.ax.set_title("Amp Chart", va='bottom')
-            self.ax.plot(self.theta, self.data, color='r', linewidth=2)
+        self.fig = plt.figure()
+        self.ax = self.fig.add_subplot(111, polar=True)
+        self.ax.set_theta_offset(np.pi / 2)
+        self.ax.set_theta_direction(-1)
+        self.ax.set_rmax(200)
+        self.ax.set_xticklabels([
+            r'$day 1$',
+            r'$day 2$',
+            r'$day 3$',
+            r'$day 4$',
+            r'$day 5$',
+            r'$day 6$',
+            r'$day 7$',
+            r'$day 8$',
+            ])
+        # self.ax.grid(True)
+        self.ax.set_title("Amp Chart", va='bottom')
+        self.ax.plot(self.theta, self.data, color='r', linewidth=2)
 
-            # self.fig, self.ax = plt.subplots()
-            # self.fig.set_facecolor("#eeeeee")
-            # self.fig.tight_layout()
-            # l, b, w, h = self.ax.get_position().bounds
-            # self.ax.set_position(pos=[l, b + 0.3*h, w, h*0.7])
-            
-            # self.ax.set_xlabel("distance [m]", fontsize=10)
-            # self.ax.set_ylabel("n", fontsize=10)
+        # self.fig, self.ax = plt.subplots()
+        # self.fig.set_facecolor("#eeeeee")
+        # self.fig.tight_layout()
+        # l, b, w, h = self.ax.get_position().bounds
+        # self.ax.set_position(pos=[l, b + 0.3*h, w, h*0.7])
+        
+        # self.ax.set_xlabel("distance [m]", fontsize=10)
+        # self.ax.set_ylabel("n", fontsize=10)
 
-            self.ids.layout_amp_chart.add_widget(FigureCanvasKivyAgg(self.fig))    
+        self.ids.layout_amp_chart.add_widget(FigureCanvasKivyAgg(self.fig))    
 
-        except:
-            print("error show graph")
+        # except:
+        #     print("error show graph")
 
     # def delayed_init(self, dt):
     #     self.fig, self.ax = plt.subplots()
@@ -706,9 +625,9 @@ class ESPMotorControllerApp(MDApp):
         self.theme_cls.primary_palette = "Blue"
         self.theme_cls.accent_palette = "Gray"
         self.icon = 'asset/Icon_Logo.png'
-        # Window.fullscreen = 'auto'
-        # Window.borderless = True
-        Window.size = 1366, 768
+        Window.fullscreen = 'auto'
+        Window.borderless = True
+        # Window.size = 1366, 768
         Window.allow_screensaver = True
 
         screen = Builder.load_file('main.kv')

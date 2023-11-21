@@ -1,6 +1,6 @@
 #:kivy 2.1.0
 
-<ScreenAmpChart>:
+<ScreenUnoSetup>:
     MDBoxLayout:
         orientation: "vertical"
 		# header layout
@@ -31,7 +31,7 @@
                 id: logo
                 source:'asset/Main_Logo.png'
                 size_hint_x: 0.25
-                allow_stretch: True                    
+                allow_stretch: True                  
 
 
 		# choose product layout
@@ -44,20 +44,22 @@
 			spacing:10
 
 			MDLabel:
-				text: "AMP CHART"
+				text: "UNO SETUP"
 				halign: 'center'
 				valign: 'middle'    
 				bold: True
 				font_size: 24
 				color: 1, 1, 1
 				size_hint_y: 0.1
-
-		BoxLayout:
-			id: layout_amp_chart
-			orientation: "horizontal"
-			spacing: 20
-
-
-
+				
+		MDGridLayout:
+			id: layout_products
+			cols:3
+			md_bg_color: app.theme_cls.accent_color
+			row_force_default: True
+			row_default_height: 200
+			size_hint: 1, 0.75
+			padding:20
+			spacing:20
 
 				

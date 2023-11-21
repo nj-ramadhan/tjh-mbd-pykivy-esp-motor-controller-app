@@ -4,6 +4,7 @@
 #:include screen_splash.kv
 #:include screen_main_menu.kv
 #:include screen_uno_modules.kv
+#:include screen_uno_setup.kv
 #:include screen_datalog_history.kv
 #:include screen_amp_chart.kv
 #:include screen_info.kv
@@ -30,8 +31,14 @@ ScreenManager:
 
     Screen:
         name: 'screen_uno_modules'
-        ScreenChoosePayment:
+        ScreenUnoModules:
             id: screen_uno_modules
+            screen_manager: screen_manager
+
+    Screen:
+        name: 'screen_uno_setup'
+        ScreenUnoSetup:
+            id: screen_uno_setup
             screen_manager: screen_manager
 
     Screen:
