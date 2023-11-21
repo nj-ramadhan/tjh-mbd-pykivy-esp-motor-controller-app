@@ -9,12 +9,12 @@
             orientation: "horizontal"
             padding: 20
 			spacing: 50
-			size_hint: 2, 0.15
+			size_hint: 1, 0.15
 
 			MDIconButton:
 				id: bt_menu
 				icon: "menu"
-				icon_size: "64sp"
+				icon_size: "54sp"
 				size_hint_x: 0.1
 				on_press: root.nav_main_menu()
 
@@ -39,7 +39,7 @@
 			id: layout_title
 			orientation: "vertical"
 			md_bg_color: app.theme_cls.primary_color
-			size_hint: 2, 0.1
+			size_hint: 1, 0.1
 			padding:10
 			spacing:10
 
@@ -55,7 +55,7 @@
 		MDBoxLayout:
 			orientation: "vertical"
 			md_bg_color: app.theme_cls.accent_color
-			size_hint: 2, 0.75
+			size_hint: 1, 0.75
 			padding:10
 			spacing:10
 
@@ -65,24 +65,3 @@
 				font_size: 20
 				size_hint_y: 2
 				color: 0, 0, 0
-
-
-	MDRelativeLayout:
-		MDFillRoundFlatIconButton:
-			id: bt_screen_choose_product
-			icon: "water"
-			text: "BACK"
-			font_size: 28
-			size_hint: 0.4, 0.1
-			pos_hint: {"center_x": .8, "center_y": .1}
-			on_press: root.screen_main_menu()
-
-		MDFillRoundFlatIconButton:
-			id: bt_screen_maintenance
-			icon: "cogs"
-			text: " "
-			font_size: 14
-			size_hint: 0.18, 0.08
-			pos_hint: {"center_x": .75, "center_y": .80}
-			on_press: root.screen_maintenance()
-				
