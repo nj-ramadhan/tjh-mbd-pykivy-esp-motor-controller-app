@@ -174,13 +174,41 @@ class ScreenDatalogHistory(MDBoxLayout):
         self.data_tables = MDDataTable(
             use_pagination=True,
             pagination_menu_pos="auto",
-            rows_num=4,
+            rows_num=5,
             column_data=[
                 ("No.", dp(10)),
-                ("Avg. Volt [V]", dp(27)),
-                ("Avg. Curr [A]", dp(27)),
-                ("Unbal. Volt [%]", dp(27)),
-                ("Unbal. Curr [%]", dp(27)),
+                ("Type", dp(35)),
+                ("Avg. Volt [V]", dp(30)),
+                ("Avg. Curr [A]", dp(30)),
+                ("Unbal. Volt [%]", dp(30)),
+                ("Unbal. Curr [%]", dp(30)),
+            ],
+            row_data=[
+                (
+                    "1",
+                    ("alert", [255 / 256, 165 / 256, 0, 1],"Warning"),
+                    "95.5",
+                    "5.0",
+                    "0.5",
+                    "0.0",
+                ),
+                (
+                    "2",
+                    ("alert-circle", [1, 0, 0, 1],"Alarm"),
+                    "75.0",
+                    "2.0",
+                    "0.5",
+                    "0.0",
+                ),
+                (
+                    "3",
+                    ("checkbox-marked-circle",[39 / 256, 174 / 256, 96 / 256, 1],"Status"),
+                    "110",
+                    "7.0",
+                    "0.5",
+                    "0.2",
+                ),
+
             ],
         )
         layout.add_widget(self.data_tables)
@@ -466,7 +494,7 @@ class ESPMotorControllerApp(MDApp):
         self.icon = 'asset/Icon_Logo.png'
         Window.fullscreen = 'auto'
         Window.borderless = True
-        # Window.size = 1366, 768
+        # Window.size = 1024, 600
         Window.allow_screensaver = True
 
         screen = Builder.load_file('main.kv')
