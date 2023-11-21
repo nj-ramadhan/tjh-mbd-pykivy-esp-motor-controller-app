@@ -1,0 +1,63 @@
+#:kivy 2.1.0
+<ScreenLogicFunction>:
+    MDBoxLayout:
+        orientation: "vertical"
+		# header layout
+        MDBoxLayout:
+            id: layout_header
+            orientation: "horizontal"
+            padding: 40
+			spacing: 40
+			size_hint: 1, 0.15
+
+			MDIconButton:
+				id: bt_menu
+				icon: "menu"
+				icon_size: "54sp"
+				size_hint_x: 0.1
+				on_press: root.nav_main_menu()
+
+			MDLabel:
+				id: subtitle            
+				text: "UNO MOTOR CONTROLLER"
+				halign: 'center'
+				valign: 'middle'
+				bold: True
+				font_size: 42
+				color: 0, 0, 0
+                    
+            Image:
+                id: logo
+                source:'asset/Main_Logo.png'
+                size_hint_x: 0.25
+                allow_stretch: True  
+
+		# choose product layout
+		MDBoxLayout:
+			id: layout_title
+			orientation: "vertical"
+			md_bg_color: app.theme_cls.primary_color
+			size_hint: 1, 0.1
+			padding:10
+			spacing:10
+
+			MDLabel:
+				text: "SCADA & SECURITY"
+				halign: 'center'
+				valign: 'middle'    
+				bold: True
+				font_size: 32
+				color: 1, 1, 1
+				size_hint_y: 0.1
+				
+		MDGridLayout:
+			id: layout_status
+			cols:3
+			md_bg_color: app.theme_cls.accent_color
+			row_force_default: True
+			row_default_height: 200
+			size_hint: 1, 0.75
+			padding:20
+			spacing:20
+
+				

@@ -6,11 +6,12 @@
 #:include screen_uno_modules.kv
 #:include screen_uno_setup.kv
 #:include screen_datalog_history.kv
+#:include screen_analog_setup.kv
+#:include screen_status.kv
+#:include screen_fault_alarm.kv
+#:include screen_scada_security.kv
+#:include screen_logic_function.kv
 #:include screen_amp_chart.kv
-#:include screen_info.kv
-#:include screen_operate.kv
-#:include screen_maintenance.kv
-#:include screen_qr_payment.kv
 
 ScreenManager:
     id: screen_manager
@@ -48,32 +49,39 @@ ScreenManager:
             screen_manager: screen_manager
 
     Screen:
+        name: 'screen_analog_setup'
+        ScreenAnalogSetup:
+            id: screen_analog_setup
+            screen_manager: screen_manager
+
+    Screen:
+        name: 'screen_status'
+        ScreenStatus:
+            id: screen_status
+            screen_manager: screen_manager
+
+    Screen:
+        name: 'screen_fault_alarm'
+        ScreenFaultAlarm:
+            id: screen_fault_alarm
+            screen_manager: screen_manager
+
+    Screen:
+        name: 'screen_scada_security'
+        ScreenScadaSecurity:
+            id: screen_scada_security
+            screen_manager: screen_manager
+
+    Screen:
+        name: 'screen_logic_function'
+        ScreenLogicFunction:
+            id: screen_logic_function
+            screen_manager: screen_manager
+
+    Screen:
         name: 'screen_amp_chart'
         ScreenAmpChart:
             id: screen_amp_chart
             screen_manager: screen_manager
-
-    Screen:
-        name: 'screen_qr_payment'
-        ScreenQRPayment:
-            id: screen_qr_payment
-            screen_manager: screen_manager  
-            
-    Screen:
-        name: 'screen_operate'
-        ScreenOperate:
-            id: screen_operate
-            screen_manager: screen_manager
-
-    Screen:
-        name: 'screen_info'
-        ScreenInfo:
-            id: screen_info
-            screen_manager: screen_manager
-
-    Screen:
-        name: 'screen_maintenance'
-        ScreenMaintenance:
-            id: screen_maintenance
-            screen_manager: screen_manager                  
+                
 

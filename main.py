@@ -117,6 +117,21 @@ class ScreenMainMenu(MDBoxLayout):
     def nav_datalog_history(self):
         self.screen_manager.current = 'screen_datalog_history'
 
+    def nav_analog_setup(self):
+        self.screen_manager.current = 'screen_analog_setup'
+
+    def nav_status(self):
+        self.screen_manager.current = 'screen_status'
+
+    def nav_fault_alarm(self):
+        self.screen_manager.current = 'screen_fault_alarm'
+
+    def nav_scada_security(self):
+        self.screen_manager.current = 'screen_scada_security'
+
+    def nav_logic_function(self):
+        self.screen_manager.current = 'screen_logic_function'
+
     def nav_amp_chart(self):
         self.screen_manager.current = 'screen_amp_chart'
 
@@ -215,224 +230,53 @@ class ScreenDatalogHistory(MDBoxLayout):
             print("error saving data")
             toast("error saving data")
     
-    def nav_datalog_history(self):
-        self.screen_manager.current = 'screen_datalog_history'
+    def nav_main_menu(self):
+        self.screen_manager.current = 'screen_main_menu'
 
-    def nav_amp_chart(self):
-        self.screen_manager.current = 'screen_amp_chart'
+class ScreenAnalogSetup(MDBoxLayout):
+    screen_manager = ObjectProperty(None)
+
+    def __init__(self, **kwargs):
+        super(ScreenAnalogSetup, self).__init__(**kwargs)
 
     def nav_main_menu(self):
         self.screen_manager.current = 'screen_main_menu'
 
-    def nav_info(self):
-        self.screen_manager.current = 'screen_info' 
-
-
-class ScreenOperate(MDBoxLayout):
-    screen_manager = ObjectProperty(None)
-    fill = False
-
-    def __init__(self, **kwargs):       
-        super(ScreenOperate, self).__init__(**kwargs)
-        Clock.schedule_interval(self.regular_check, .1)
-
-    def move_up(self):
-        global out_motor_linear
-        if (not DEBUG) : out_motor_linear.forward()
-        print("move up")
-        toast("moving tumbler base up")
-
-    def move_down(self):
-        global out_motor_linear
-        if (not DEBUG) : out_motor_linear.backward()
-        print("move down")
-        toast("moving tumbler base down")
-
-    def fill_start(self):
-        global pulse
-        if (not DEBUG and not self.fill) :
-            pulse = 0 
-            self.fill = True
-
-        print("fill start")
-        toast("water filling is started")
-
-    def fill_stop(self):
-        global out_pump_cold, out_pump_normal
-        if(not DEBUG):
-            out_pump_cold.off()
-            out_pump_normal.off()
-            self.fill = False
-
-        print("fill stop")
-        toast("thank you for decreasing plastic bottle trash by buying our product")
-        self.screen_manager.current = 'screen_main_menu'
-
-    def regular_check(self, *args):
-        global pulse, product, pulsePerMiliLiter, in_limit_closed, in_limit_opened, in_sensor_proximity, out_pump_cold, out_pump_normal, stepperAct
-
-        if (self.fill):
-            if (pulse <= pulsePerMiliLiter*product):
-                if (in_sensor_proximity):
-                    if (not in_limit_opened) : stepperAct('open')
-                    out_pump_cold.on() if (cold) else out_pump_normal.on()
-                else :
-                    out_pump_cold.off()
-                    out_pump_normal.off()
-                    toast("please put your tumbler")
-
-            else :
-                out_pump_cold.off()
-                out_pump_normal.off()
-                stepperAct('close')
-                self.fill = False
-                toast("thank you for decreasing plastic bottle trash by buying our product")
-
-class ScreenQRPayment(MDBoxLayout):
+class ScreenStatus(MDBoxLayout):
     screen_manager = ObjectProperty(None)
 
     def __init__(self, **kwargs):
-        super(ScreenQRPayment, self).__init__(**kwargs)
-        Clock.schedule_interval(self.regular_check, 1)
-        
-    def regular_check(self, *args):
-        self.ids.image_qr_payment.source = 'qr_payment.png'
-        self.ids.image_qr_payment.reload()
-        pass
+        super(ScreenStatus, self).__init__(**kwargs)
 
-    def cancel(self):
+    def nav_main_menu(self):
         self.screen_manager.current = 'screen_main_menu'
 
-    def dummy_success(self):
-        self.screen_manager.current = 'screen_operate' 
-
-class ScreenInfo(MDBoxLayout):
+class ScreenFaultAlarm(MDBoxLayout):
     screen_manager = ObjectProperty(None)
 
     def __init__(self, **kwargs):
-        super(ScreenInfo, self).__init__(**kwargs)
+        super(ScreenFaultAlarm, self).__init__(**kwargs)
 
-    def screen_main_menu(self):
+    def nav_main_menu(self):
         self.screen_manager.current = 'screen_main_menu'
 
-    def screen_maintenance(self):
-        self.screen_manager.current = 'screen_maintenance'      
- 
-
-class ScreenMaintenance(MDBoxLayout):
+class ScreenScadaSecurity(MDBoxLayout):
     screen_manager = ObjectProperty(None)
 
     def __init__(self, **kwargs):
-        super(ScreenMaintenance, self).__init__(**kwargs)
+        super(ScreenScadaSecurity, self).__init__(**kwargs)
 
-    def act_valve_cold(self):
-        global valve_cold, out_valve_cold
-        if (valve_cold):
-            valve_cold = False 
-            if (not DEBUG) : out_valve_cold.off()
-        else:
-            valve_cold = True 
-            if (not DEBUG) : out_valve_cold.on()
-
-    def act_valve_normal(self):
-        global valve_normal, out_valve_normal
-        if (valve_normal):
-            valve_normal = False 
-            if (not DEBUG) : out_valve_normal.off()
-        else:
-            valve_normal = True 
-            if (not DEBUG) : out_valve_normal.on()
-
-    def act_pump_main(self):
-        global pump_main, out_pump_main
-        if (pump_main):
-            pump_main = False            
-            if (not DEBUG) : out_pump_main.on()
-        else:
-            pump_main = True
-            if (not DEBUG) : out_pump_main.off()
-
-    def act_pump_cold(self):
-        global pump_cold, out_pump_cold
-        if (pump_cold):
-            pump_cold = False
-            if (not DEBUG) : out_pump_cold.off()
-        else:
-            pump_cold = True 
-            if (not DEBUG) : out_pump_cold.on()
-
-    def act_pump_normal(self):
-        global pump_normal, out_pump_normal
-        if (pump_normal):
-            pump_normal = False
-            if (not DEBUG) : out_pump_normal.off()
-        else:
-            pump_normal = True
-            if (not DEBUG) : out_pump_normal.on()
-
-    def act_open(self):
-        global stepper_open, in_limit_opened
-
-        # stepper_open is boolean, if stepper_open on it can change GPIO condition to move open or close
-        # if (stepper_open):
-        #     stepperAct('open')
-        #     stepper_open = False
-        # else:
-        #     stepperAct('close')
-        #     stepper_open = True
-        # if not lsOpen
-        if (not DEBUG) : 
-            if (not in_limit_opened) :
-                stepperAct('open')
-
-        stepper_open = True
-        
-
-    def act_close(self):
-        global stepper_open, in_limit_closed
-
-        # stepper_open is boolean, if stepper_open on it can change GPIO condition to move open or close
-        # if (stepper_open):
-        #     stepperAct('open')
-        #     stepper_open = False
-        # else:
-        #     stepperAct('close')
-        #     stepper_open = True
-
-        if (not DEBUG) : 
-            if (not in_limit_closed) :
-                stepperAct('close')
-                
-        stepper_open = False
-
-    def act_up(self):
-        global linear_motor, out_motor_linear
-        self.ids.bt_up.md_bg_color = "#3C9999"
-        if (not DEBUG) : out_motor_linear.forward()
-        toast("tumbler base is going up")
-
-        # linear_motor is boolean, if linear motor on it can change GPIO condition to move up or down
-        # if (linear_motor):
-        #     pass
-
-    def act_down(self):
-        global linear_motor, out_motor_linear
-        self.ids.bt_down.md_bg_color = "#3C9999"
-        if (not DEBUG) : out_motor_linear.backward()
-        toast("tumbler base is going down")
-
-        # if (linear_motor):
-        #     pass
-
-    def act_stop(self):
-        global linear_motor, out_motor_linear
-        self.ids.bt_up.md_bg_color = "#09343C"
-        self.ids.bt_down.md_bg_color = "#09343C"
-        if (not DEBUG) : out_motor_linear.stop()
-
-    def exit(self):
+    def nav_main_menu(self):
         self.screen_manager.current = 'screen_main_menu'
 
+class ScreenLogicFunction(MDBoxLayout):
+    screen_manager = ObjectProperty(None)
+
+    def __init__(self, **kwargs):
+        super(ScreenLogicFunction, self).__init__(**kwargs)
+
+    def nav_main_menu(self):
+        self.screen_manager.current = 'screen_main_menu'
 
 class ScreenAmpChart(MDBoxLayout):
     screen_manager = ObjectProperty(None)
@@ -612,9 +456,6 @@ class ScreenAmpChart(MDBoxLayout):
 
     def nav_main_menu(self):
         self.screen_manager.current = 'screen_main_menu'
-
-    def nav_info(self):
-        self.screen_manager.current = 'screen_info' 
 
 class ESPMotorControllerApp(MDApp):
     def __init__(self, **kwargs):

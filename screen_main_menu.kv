@@ -6,8 +6,8 @@
         MDBoxLayout:
             id: layout_header
             orientation: "horizontal"
-            padding: 20
-			spacing: 50
+            padding: 40
+			spacing: 40
 			size_hint: 1, 0.15
 
 			MDIconButton:
@@ -99,10 +99,10 @@
 					bold: True
 
 			MDCard:
-				id: card_analog_display
+				id: card_analog_setup
 				ripple_behavior: True
 				radius:  [dp(24), dp(24), dp(24), dp(24)]
-				on_press: root.nav_analog_display(1000,4,3500)
+				on_press: root.nav_analog_setup()
 
 				MDLabel:
 					text: "ANALOG SETUP & DISPLAY"
@@ -115,7 +115,7 @@
 				id: card_status
 				ripple_behavior: True
 				radius:  [dp(24), dp(24), dp(24), dp(24)]
-				on_press: root.nav_status(1000,4,3500)
+				on_press: root.nav_status()
 
 				MDLabel:
 					text: "STATUS"
@@ -125,10 +125,10 @@
 					bold: True
 
 			MDCard:
-				id: product_1000ml
+				id: card_fault_alarm
 				ripple_behavior: True
 				radius:  [dp(24), dp(24), dp(24), dp(24)]
-				on_press: root.uno_modules(1000,4,3500)
+				on_press: root.nav_fault_alarm()
 
 				MDLabel:
 					text: "FAULT & ALARM"
@@ -138,10 +138,10 @@
 					bold: True
 
 			MDCard:
-				id: product_1000ml
+				id: card_scada_security
 				ripple_behavior: True
 				radius:  [dp(24), dp(24), dp(24), dp(24)]
-				on_press: root.uno_modules(1000,4,3500)
+				on_press: root.nav_scada_security()
 
 				MDLabel:
 					text: "SCADA & SECURITY"
@@ -151,10 +151,10 @@
 					bold: True
 
 			MDCard:
-				id: product_1000ml
+				id: card_logic_function
 				ripple_behavior: True
 				radius:  [dp(24), dp(24), dp(24), dp(24)]
-				on_press: root.uno_modules(1000,4,3500)
+				on_press: root.nav_logic_function()
 
 				MDLabel:
 					text: "LOGIC FUNCTION"
