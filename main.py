@@ -372,10 +372,10 @@ class ScreenAmpChart(MDBoxLayout):
         # self.show_theta = np.array([])
         # self.show_data = np.array([])
 
-        # self.fig, self.ax = plt.subplots(polar=True)
+        self.fig, self.ax = plt.subplots(subplot_kw={'projection': 'polar'})
 
-        self.fig = plt.figure()
-        self.ax = self.fig.add_subplot(111, polar=True)
+        # self.fig = plt.figure()
+        # self.ax = self.fig.add_subplot(111, polar=True)
         self.ax.set_theta_offset(np.pi / 2)
         self.ax.set_theta_direction(-1)
         self.ax.set_rmax(200)
