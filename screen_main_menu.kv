@@ -1,5 +1,5 @@
 #:kivy 2.1.0
-<ScreenChooseScreen>:
+<ScreenMainMenu>:
     MDBoxLayout:
         orientation: "vertical"
 		# header layout
@@ -9,6 +9,12 @@
             padding: 20
 			spacing: 50
 			size_hint: 1, 0.15
+
+			MDRoundFlatIconButton:
+				id: bt_menu
+				icon: "menu"
+				size_hint_x: 0.25
+				on_press: root.nav_main_menu()
 
 			MDLabel:
 				id: subtitle            
@@ -25,21 +31,38 @@
                 size_hint_x: 0.25
                 allow_stretch: True                   
 
+		MDBoxLayout:
+			id: layout_title
+			orientation: "vertical"
+			md_bg_color: app.theme_cls.primary_color
+			size_hint: 1, 0.1
+			padding:10
+			spacing:10
+
+			MDLabel:
+				text: "MAIN SCREEN"
+				halign: 'center'
+				valign: 'middle'    
+				bold: True
+				font_size: 24
+				color: 1, 1, 1
+				size_hint_y: 0.1
 
 		MDGridLayout:
 			id: layout_products
 			cols:3
 			md_bg_color: app.theme_cls.accent_color
 			row_force_default: True
-			row_default_height: 200
-			size_hint: 1, 0.85
-			padding:100
-			spacing:80
+			row_default_height: 180
+			size_hint: 1, 0.75
+			padding:60
+			spacing:60
 
 			MDCard:
-				id: product_220ml
+				id: card_uno_modules
 				ripple_behavior: True
-				on_press: root.uno_modules(220,1,1000)
+				radius:  [dp(24), dp(24), dp(24), dp(24)]
+				on_press: root.nav_uno_modules(220,1,1000)
 
 				MDLabel:
 					text: "UNO MODULES"
@@ -49,9 +72,10 @@
 					bold: True
 
 			MDCard:
-				id: product_330ml
+				id: card_uno_setup
 				ripple_behavior: True
-				on_press: root.uno_modules(330,2,1500)
+				radius:  [dp(24), dp(24), dp(24), dp(24)]
+				on_press: root.nav_uno_setup()
 
 				MDLabel:
 					text: "UNO SETUP"
@@ -61,9 +85,10 @@
 					bold: True
 
 			MDCard:
-				id: product_600ml
+				id: card_datalog_history
 				ripple_behavior: True
-				on_press: root.uno_modules(600,3,2500)
+				radius:  [dp(24), dp(24), dp(24), dp(24)]
+				on_press: root.nav_datalog_history()
 
 				MDLabel:
 					text: "DATALOG & HISTORY"
@@ -73,9 +98,10 @@
 					bold: True
 
 			MDCard:
-				id: product_1000ml
+				id: card_analog_display
 				ripple_behavior: True
-				on_press: root.uno_modules(1000,4,3500)
+				radius:  [dp(24), dp(24), dp(24), dp(24)]
+				on_press: root.nav_analog_display(1000,4,3500)
 
 				MDLabel:
 					text: "ANALOG SETUP & DISPLAY"
@@ -85,9 +111,10 @@
 					bold: True
 
 			MDCard:
-				id: product_1000ml
+				id: card_status
 				ripple_behavior: True
-				on_press: root.uno_modules(1000,4,3500)
+				radius:  [dp(24), dp(24), dp(24), dp(24)]
+				on_press: root.nav_status(1000,4,3500)
 
 				MDLabel:
 					text: "STATUS"
@@ -99,6 +126,7 @@
 			MDCard:
 				id: product_1000ml
 				ripple_behavior: True
+				radius:  [dp(24), dp(24), dp(24), dp(24)]
 				on_press: root.uno_modules(1000,4,3500)
 
 				MDLabel:
@@ -111,6 +139,7 @@
 			MDCard:
 				id: product_1000ml
 				ripple_behavior: True
+				radius:  [dp(24), dp(24), dp(24), dp(24)]
 				on_press: root.uno_modules(1000,4,3500)
 
 				MDLabel:
@@ -123,6 +152,7 @@
 			MDCard:
 				id: product_1000ml
 				ripple_behavior: True
+				radius:  [dp(24), dp(24), dp(24), dp(24)]
 				on_press: root.uno_modules(1000,4,3500)
 
 				MDLabel:
@@ -132,4 +162,16 @@
 					font_size: 48
 					bold: True
 
+			MDCard:
+				id: card_amp_chart
+				ripple_behavior: True
+				radius:  [dp(24), dp(24), dp(24), dp(24)]
+				on_press: root.nav_amp_chart()
+
+				MDLabel:
+					text: "AMP CHART"
+					halign: 'center'
+					valign: 'middle'
+					font_size: 48
+					bold: True
 				

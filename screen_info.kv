@@ -11,6 +11,12 @@
 			spacing: 50
 			size_hint: 2, 0.15
 
+			MDRoundFlatIconButton:
+				id: bt_menu
+				icon: "menu"
+				size_hint_x: 0.25
+				on_press: root.nav_main_menu()
+
 			MDLabel:
 				id: subtitle            
 				text: "UNO MOTOR CONTROLLER"
@@ -68,7 +74,7 @@
 			font_size: 28
 			size_hint: 0.4, 0.1
 			pos_hint: {"center_x": .8, "center_y": .1}
-			on_press: root.screen_choose_screen()
+			on_press: root.screen_main_menu()
 
 		MDFillRoundFlatIconButton:
 			id: bt_screen_maintenance

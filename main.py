@@ -14,8 +14,16 @@ from kivy.config import Config
 from kivy.metrics import dp
 from datetime import datetime
 from pathlib import Path
+from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+from matplotlib.figure import Figure
+from matplotlib.colors import ListedColormap, LinearSegmentedColormap
+from matplotlib.ticker import AutoMinorLocator
 from kivy.properties import ObjectProperty
-from kivy.properties import StringProperty
+import time
+
+plt.style.use('bmh')
 
 from gpiozero import Button
 from gpiozero import RotaryEncoder
@@ -27,13 +35,6 @@ import minimalmodbus
 import time
 import qrcode
 import requests
-
-qr = qrcode.QRCode(
-    version=1,
-    error_correction=qrcode.constants.ERROR_CORRECT_L,
-    box_size=10,
-    border=4,
-)
 
 colors = {
     "Blue": {
@@ -74,130 +75,6 @@ colors = {
 MAINTENANCE= True
 DEBUG = True
 
-SERVER = 'https://app.kickyourplast.com/api/'
-MACHINE_CODE = 'KYP001'
-
-if (DEBUG) :
-    try :
-        r = requests.patch(SERVER + 'machines/' + MACHINE_CODE, data={
-            'stock' : str(levelMainTank)+'%',
-            'status' : 'not_ready'            
-        })
-    except Exception as e:
-        print(e)
-
-# modbus rtu communication paramater setup
-BAUDRATE = 9600
-BYTESIZES = 8
-STOPBITS = 1
-TIMEOUT = 0.5
-PARITY = minimalmodbus.serial.PARITY_NONE
-MODE = minimalmodbus.MODE_RTU
-
-if(not DEBUG):
-    # input declaration 
-    in_sensor_proximity = Button(17)
-    in_sensor_flow = DigitalInputDevice(19)
-    in_limit_opened = Button(27)
-    in_limit_closed = Button(22)
-
-    # modbus communication of sensor declaration 
-    mainTank = minimalmodbus.Instrument('/dev/ttyUSB0', 1)
-    mainTank.serial.baudrate = BAUDRATE
-    mainTank.serial.bytesize = BYTESIZES
-    mainTank.serial.parity = PARITY
-    mainTank.serial.stopbits = STOPBITS
-    mainTank.serial.timeout = 0.5
-    mainTank.mode = MODE
-    mainTank.clear_buffers_before_each_transaction = True
-
-    coldTank = minimalmodbus.Instrument('/dev/ttyUSB0', 2)
-    coldTank.serial.baudrate = BAUDRATE
-    coldTank.serial.bytesize = BYTESIZES
-    coldTank.serial.parity = PARITY
-    coldTank.serial.stopbits = STOPBITS
-    coldTank.serial.timeout = 0.5
-    coldTank.mode = MODE
-    coldTank.clear_buffers_before_each_transaction = True
-
-    normalTank = minimalmodbus.Instrument('/dev/ttyUSB0', 3)
-    normalTank.serial.baudrate = BAUDRATE
-    normalTank.serial.bytesize = BYTESIZES
-    normalTank.serial.parity = PARITY
-    normalTank.serial.stopbits = STOPBITS
-    normalTank.serial.timeout = 0.5
-    normalTank.mode = MODE
-    normalTank.clear_buffers_before_each_transaction = True
-
-    # output declaration 
-    out_valve_cold = DigitalOutputDevice(20)
-    out_valve_normal = DigitalOutputDevice(26)
-    out_pump_main = DigitalOutputDevice(21)
-    out_pump_cold = DigitalOutputDevice(5)
-    out_pump_normal = DigitalOutputDevice(6)
-    out_stepper_enable = DigitalOutputDevice(23)
-    out_stepper_direction = DigitalOutputDevice(24)
-    out_stepper_pulse = PWMOutputDevice(12)
-    out_motor_linear = Motor(16, 9)
-
-    out_valve_cold.off()
-    out_valve_normal.off()
-    out_pump_main.on()
-    out_pump_normal.off()
-    out_pump_normal.off()
-    out_motor_linear.stop()
-
-valve_cold = False
-valve_normal = False
-pump_main = False
-pump_cold = False
-pump_normal = False
-linear_motor = False
-stepper_open = False
-
-pulsePerLiter = 450
-pulsePerMiliLiter = 450/1000
-
-cold = False
-product = 0
-idProduct = 0
-productPrice = 0
-pulse = 0
-levelMainTank = 0
-levelNormalTank = 0
-levelColdTank = 0
-maxMainTank = 1500
-maxNormalTank = 500
-maxColdTank = 500
-qrSource = 'qr_payment.png'
-
-def countPulse():
-    global pulse
-    pulse +=1
-
-if (not DEBUG) : in_sensor_flow.when_activated = countPulse 
-
-def stepperAct(exec : str):
-    global out_stepper_enable, out_stepper_direction ,out_stepper_pulse, in_limit_opened, in_limit_closed
-    
-    if(not DEBUG):
-        out_stepper_enable.on()
-    
-    if (exec == 'open'):
-        if(not DEBUG):
-            out_stepper_direction.on()
-            while not in_limit_opened.value:
-                out_stepper_pulse.value = 0.5
-            
-            out_stepper_pulse.value = 0
-    else:
-        if(not DEBUG):
-            out_stepper_direction.off()
-            while not in_limit_closed.value:
-                out_stepper_pulse.value = 0.5
-            
-            out_stepper_pulse.value = 0
-
 class ScreenSplash(MDBoxLayout):
     screen_manager = ObjectProperty(None)
     app_window = ObjectProperty(None)
@@ -219,124 +96,113 @@ class ScreenSplash(MDBoxLayout):
             self.ids.progress_bar.value = 100
             self.ids.progress_bar_label.text = 'Loading.. [{:} %]'.format(100)
             time.sleep(0.5)
-            self.screen_manager.current = 'screen_choose_screen'
+            self.screen_manager.current = 'screen_main_menu'
             return False
 
     def regular_check(self, *args):
         global levelColdTank, levelMainTank, levelNormalTank, maxColdTank, maxMainTank, maxNormalTank, out_pump_main, out_valve_cold, out_valve_normal
 
-        # program for reading sensor end control system algorithm
-        if(not DEBUG):
-            try:
-                read = mainTank.read_register(5,0,3,False)
-                levelMainTank = read * 100 / maxMainTank
-                time.sleep(.1)
-                read = coldTank.read_register(0x0101,0,3,False)
-                levelColdTank = read * 100 / maxColdTank
-                time.sleep(.1)
-                read = normalTank.read_register(0x0101,0,3,False)
-                levelNormalTank = read * 100 / maxNormalTank    
-                
-            except Exception as e:
-                print(e)
-        
-        # Tank mechanism
-        if (not MAINTENANCE):
-            if (levelMainTank <= 40):
-                if (not DEBUG) :
-                    try :
-                        r = requests.patch(SERVER + 'machines/' + MACHINE_CODE, data={
-                            'stock' : str(levelMainTank)+'%',
-                            'status' : 'not_ready'
-                        })
-                    except Exception as e:
-                        print(e)
-                    print('sending request to server')
-            else:
-                try :
-                    r = requests.patch(SERVER + 'machines/' + MACHINE_CODE, data={
-                        'stock' : str(levelMainTank)+'%',
-                        'status' : 'ready'
-                    })
-                except Exception as e:                    
-                    print(e)
-                    
-            if (levelColdTank <=40):
-                if (not DEBUG) : 
-                    out_valve_cold.on()
-                    out_pump_main.off()
-            
-            if (levelNormalTank <=40):
-                if (not DEBUG) : 
-                    out_valve_normal.on()
-                    out_pump_main.off()
-
-            if (levelColdTank >= 85):
-                if (not DEBUG) : 
-                    out_valve_cold.off()
-                    out_pump_main.on()
-
-            if (levelNormalTank >= 85):
-                if (not DEBUG) : 
-                    out_valve_normal.off()
-                    out_pump_main.off()
-
-        # scan kupon QR CODE
-        # if (something):
-        #     try :
-        #         r = requests.post(SERVER + 'transactions/' + KODE_KUPON + '/used_machine', data={
-        #             'machine_code' : MACHINE_CODE
-        #         })
-
-        #         toast(r.json().message)
-        #     except Exception as e:
-        #         print(e)
-
-class ScreenChooseScreen(MDBoxLayout):
+class ScreenMainMenu(MDBoxLayout):
     screen_manager = ObjectProperty(None)
 
     def __init__(self, **kwargs):
-        super(ScreenChooseScreen, self).__init__(**kwargs)
-        Clock.schedule_interval(self.regular_check, .1)
-        
-        try :
-            r = requests.get(SERVER + 'products', {all : True})
-            print(r.json()['data'])
-            self.products = r.json()['data']
-        except Exception as e:
-            print(e)
+        super(ScreenMainMenu, self).__init__(**kwargs)
 
-    def cold_mode(self, value):
-        global cold
-        cold = value
+    def nav_datalog_history(self):
+        self.screen_manager.current = 'screen_datalog_history'
 
-    def uno_modules(self, size, id, price):
-        global product, idProduct, productPrice
-        self.screen_manager.current = 'screen_uno_modules'
-        product = size
-        idProduct = id
-        productPrice = price
-        print(idProduct,type(idProduct))
-        print(product,type(product))
-        print(productPrice,type(productPrice))
+    def nav_amp_chart(self):
+        self.screen_manager.current = 'screen_amp_chart'
 
-    def screen_info(self):
-        self.screen_manager.current = 'screen_info'
+    def nav_main_menu(self):
+        self.screen_manager.current = 'screen_main_menu'
 
-    def regular_check(self, *args):
-        # program for displaying IO condition
-        if (cold):
-            self.ids.bt_cold.md_bg_color = "#3C9999"
-            self.ids.bt_normal.md_bg_color = "#09343C"
-        else:
-            self.ids.bt_cold.md_bg_color = "#09343C"
-            self.ids.bt_normal.md_bg_color = "#3C9999"       
+    def nav_info(self):
+        self.screen_manager.current = 'screen_info'      
 
 class ScreenDatalogHistory(MDBoxLayout):
     screen_manager = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super(ScreenDatalogHistory, self).__init__(**kwargs)
+        Clock.schedule_once(self.delayed_init)
+        # Clock.schedule_interval(self.regular_check, 1)
+
+    def regular_check(self, dt):
+        pass
+
+    def delayed_init(self, dt):
+        layout = self.ids.layout_tables
+        
+        self.data_tables = MDDataTable(
+            use_pagination=True,
+            pagination_menu_pos="auto",
+            rows_num=4,
+            column_data=[
+                ("No.", dp(10)),
+                ("Avg. Volt [V]", dp(27)),
+                ("Avg. Curr [A]", dp(27)),
+                ("Unbal. Volt [%]", dp(27)),
+                ("Unbal. Curr [%]", dp(27)),
+            ],
+        )
+        layout.add_widget(self.data_tables)
+
+    def reset_data(self):
+        global data_base
+        global dt_measure
+        global dt_current
+        global dt_voltage
+        
+        data_base = np.zeros([5, 1])
+        dt_measure = np.zeros(6)
+        dt_current = np.zeros(10)
+        dt_voltage = np.zeros(10)
+        
+        layout = self.ids.layout_tables
+        
+        self.data_tables = MDDataTable(
+            use_pagination=True,
+            pagination_menu_pos="auto",
+            rows_num=4,
+            column_data=[
+                ("No.", dp(10)),
+                ("Volt [V]", dp(27)),
+                ("Curr [mA]", dp(27)),
+                ("Resi [kOhm]", dp(27)),
+                ("Std Dev Res", dp(27)),
+                ("IP (R decay)", dp(27)),
+            ],
+        )
+        layout.add_widget(self.data_tables)
+
+    def save_data(self):
+        try:
+
+            now = datetime.now().strftime("/%d_%m_%Y_%H_%M_%S.dat")
+            # disk = str(DISK_ADDRESS) + now
+            disk = os.getcwd() + now
+            head="%s \n%.2f \n%s \n%s \n0 \n1" % (now, dt_distance, mode, len(data_base.T[2]))
+            foot="0 \n0 \n0 \n0 \n0"
+            with open(disk,"wb") as f:
+                np.savetxt(f, data_write.T, fmt="%.3f", delimiter="\t", header=head, footer=foot, comments="")
+            print("sucessfully save data")
+            toast("sucessfully save data")
+        except:
+            print("error saving data")
+            toast("error saving data")
+    
+    def nav_datalog_history(self):
+        self.screen_manager.current = 'screen_datalog_history'
+
+    def nav_amp_chart(self):
+        self.screen_manager.current = 'screen_amp_chart'
+
+    def nav_main_menu(self):
+        self.screen_manager.current = 'screen_main_menu'
+
+    def nav_info(self):
+        self.screen_manager.current = 'screen_info' 
 
 class ScreenChoosePayment(MDBoxLayout):
     screen_manager = ObjectProperty(None)
@@ -434,14 +300,14 @@ class ScreenChoosePayment(MDBoxLayout):
 
             elif (r.json()['data']['payment_status'] != 'pending'):
                 toast("payment failed")
-                self.screen_manager.current = 'screen_choose_screen'
+                self.screen_manager.current = 'screen_main_menu'
                 Clock.unschedule(self.payment_check)
                 
         except Exception as e:
             print(e)
 
-    def screen_choose_screen(self):
-        self.screen_manager.current = 'screen_choose_screen'
+    def screen_main_menu(self):
+        self.screen_manager.current = 'screen_main_menu'
 
 class ScreenOperate(MDBoxLayout):
     screen_manager = ObjectProperty(None)
@@ -481,7 +347,7 @@ class ScreenOperate(MDBoxLayout):
 
         print("fill stop")
         toast("thank you for decreasing plastic bottle trash by buying our product")
-        self.screen_manager.current = 'screen_choose_screen'
+        self.screen_manager.current = 'screen_main_menu'
 
     def regular_check(self, *args):
         global pulse, product, pulsePerMiliLiter, in_limit_closed, in_limit_opened, in_sensor_proximity, out_pump_cold, out_pump_normal, stepperAct
@@ -516,7 +382,7 @@ class ScreenQRPayment(MDBoxLayout):
         pass
 
     def cancel(self):
-        self.screen_manager.current = 'screen_choose_screen'
+        self.screen_manager.current = 'screen_main_menu'
 
     def dummy_success(self):
         self.screen_manager.current = 'screen_operate' 
@@ -527,8 +393,8 @@ class ScreenInfo(MDBoxLayout):
     def __init__(self, **kwargs):
         super(ScreenInfo, self).__init__(**kwargs)
 
-    def screen_choose_screen(self):
-        self.screen_manager.current = 'screen_choose_screen'
+    def screen_main_menu(self):
+        self.screen_manager.current = 'screen_main_menu'
 
     def screen_maintenance(self):
         self.screen_manager.current = 'screen_maintenance'      
@@ -539,7 +405,6 @@ class ScreenMaintenance(MDBoxLayout):
 
     def __init__(self, **kwargs):
         super(ScreenMaintenance, self).__init__(**kwargs)
-        Clock.schedule_interval(self.regular_check, .1)
 
     def act_valve_cold(self):
         global valve_cold, out_valve_cold
@@ -647,47 +512,190 @@ class ScreenMaintenance(MDBoxLayout):
         if (not DEBUG) : out_motor_linear.stop()
 
     def exit(self):
-        self.screen_manager.current = 'screen_choose_screen'
+        self.screen_manager.current = 'screen_main_menu'
 
-    def regular_check(self, *args):
-        global levelColdTank, levelMainTank, levelNormalTank
 
-        self.ids.lb_level_main.text = str(levelMainTank) + '%'
-        self.ids.lb_level_cold.text = str(levelColdTank) + '%'
-        self.ids.lb_level_normal.text = str(levelNormalTank) + '%'
+class ScreenAmpChart(MDBoxLayout):
+    screen_manager = ObjectProperty(None)
 
-        # program for displaying IO condition        
-        if (valve_cold):
-            self.ids.bt_valve_cold.md_bg_color = "#3C9999"
+    def __init__(self, **kwargs):
+        super(ScreenAmpChart, self).__init__(**kwargs)
+        Clock.schedule_once(self.delayed_init)
+        # Clock.schedule_interval(self.regular_check, 2)
+
+    def regular_check(self, dt):
+        try:
+            self.a
+            self.theta
+            self.data
+            self.show_data
+            self.show_theta
+            
+            self.fig = plt.figure()
+            self.ax = self.fig.add_subplot(111, polar=True)
+            self.ax.set_theta_offset(np.pi / 2)
+            self.ax.set_theta_direction(-1)
+            self.ax.set_rmax(200)
+            self.ax.set_xticklabels([
+                r'$day 1$',
+                r'$day 2$',
+                r'$day 3$',
+                r'$day 4$',
+                r'$day 5$',
+                r'$day 6$',
+                r'$day 7$',
+                r'$day 8$',
+                ])
+            self.ax.grid(True)
+            self.ax.set_title("Amp Chart", va='bottom')
+            self.ax.plot(self.theta, self.data, color='r', linewidth=2)
+
+            self.a = self.a + 1
+            # self.fig.set_facecolor("#eeeeee")
+            # self.fig.tight_layout()
+            
+            # self.ax.set_xlabel("distance [m]", fontsize=10)
+            # self.ax.set_ylabel("n", fontsize=10)
+            # self.ax.set_facecolor("#eeeeee")
+
+            # # datum location
+            # max_data = np.max(data_base[2,:data_limit])
+            # cmap, norm = mcolors.from_levels_and_colors([0.0, max_data, max_data * 2],['green','red'])
+            # self.ax.scatter(visualized_data_pos[0,:data_limit], -visualized_data_pos[1,:data_limit], c=data_base[2,:data_limit], cmap=cmap, norm=norm, label=l_electrode[0], marker='o')
+            # electrode location
+            self.ids.layout_amp_chart.clear_widgets()
+            self.ids.layout_amp_chart.add_widget(FigureCanvasKivyAgg(self.fig))
+
+            print("successfully show graphic")
+        
+        except:
+            print("error show graphic")
+
+
+    def delayed_init(self, dt):
+        try:
+            self.n = 115
+            self.a = 0
+            self.data = np.random.uniform(100.0, 200.0, self.n)
+            self.angle = np.arange(0, self.n, 1)
+            self.theta = np.pi * np.deg2rad(self.angle)
+
+            # self.show_theta = np.array([])
+            # self.show_data = np.array([])
+
+            self.fig, self.ax = plt.subplots(polar=True)
+
+            # self.fig = plt.figure()
+            # self.ax = self.fig.add_subplot(111, polar=True)
+            self.ax.set_theta_offset(np.pi / 2)
+            self.ax.set_theta_direction(-1)
+            self.ax.set_rmax(200)
+            self.ax.set_xticklabels([
+                r'$day 1$',
+                r'$day 2$',
+                r'$day 3$',
+                r'$day 4$',
+                r'$day 5$',
+                r'$day 6$',
+                r'$day 7$',
+                r'$day 8$',
+                ])
+            # self.ax.grid(True)
+            self.ax.set_title("Amp Chart", va='bottom')
+            self.ax.plot(self.theta, self.data, color='r', linewidth=2)
+
+            # self.fig, self.ax = plt.subplots()
+            # self.fig.set_facecolor("#eeeeee")
+            # self.fig.tight_layout()
+            # l, b, w, h = self.ax.get_position().bounds
+            # self.ax.set_position(pos=[l, b + 0.3*h, w, h*0.7])
+            
+            # self.ax.set_xlabel("distance [m]", fontsize=10)
+            # self.ax.set_ylabel("n", fontsize=10)
+
+            self.ids.layout_amp_chart.add_widget(FigureCanvasKivyAgg(self.fig))    
+
+        except:
+            print("error show graph")
+
+    # def delayed_init(self, dt):
+    #     self.fig, self.ax = plt.subplots()
+    #     self.fig.set_facecolor("#eeeeee")
+    #     self.fig.tight_layout()
+    #     l, b, w, h = self.ax.get_position().bounds
+    #     self.ax.set_position(pos=[l, b + 0.3*h, w, h*0.7])
+        
+    #     self.ax.set_xlabel("distance [m]", fontsize=10)
+    #     self.ax.set_ylabel("n", fontsize=10)
+
+    #     self.ids.layout_amp_chart.add_widget(FigureCanvasKivyAgg(self.fig))        
+
+    def measure(self):
+        global flag_run
+        if(flag_run):
+            flag_run = False
         else:
-            self.ids.bt_valve_cold.md_bg_color = "#09343C"
+            flag_run = True
 
-        if (valve_normal):
-            self.ids.bt_valve_normal.md_bg_color = "#3C9999"
-        else:
-            self.ids.bt_valve_normal.md_bg_color = "#09343C"
+    def reset_graph(self):
+        global data_base
+        global data_pos
 
-        if (pump_main):
-            self.ids.bt_pump_main.md_bg_color = "#3C9999"
-        else:
-            self.ids.bt_pump_main.md_bg_color = "#09343C"
+        data_base = np.zeros([5, 1])
+        data_pos = np.zeros([2, 1])
 
-        if (pump_cold):
-            self.ids.bt_pump_cold.md_bg_color = "#3C9999"
-        else:
-            self.ids.bt_pump_cold.md_bg_color = "#09343C"
+        try:
+            self.ids.layout_graph.clear_widgets()
+            self.fig, self.ax = plt.subplots()
+            self.fig.set_facecolor("#eeeeee")
+            self.fig.tight_layout()
+            l, b, w, h = self.ax.get_position().bounds
+            self.ax.set_position(pos=[l, b + 0.3*h, w, h*0.7])
+            
+            self.ax.set_xlabel("distance [m]", fontsize=10)
+            self.ax.set_ylabel("n", fontsize=10)
 
-        if (pump_normal):
-            self.ids.bt_pump_normal.md_bg_color = "#3C9999"
-        else:
-            self.ids.bt_pump_normal.md_bg_color = "#09343C"
+            self.ids.layout_graph.add_widget(FigureCanvasKivyAgg(self.fig))        
+            print("successfully reset graphic")
+        
+        except:
+            print("error reset graphic")
 
-        if (stepper_open):
-            self.ids.bt_open.md_bg_color = "#3C9999"
-            self.ids.bt_close.md_bg_color = "#09343C"
-        else:
-            self.ids.bt_open.md_bg_color = "#09343C"
-            self.ids.bt_close.md_bg_color = "#3C9999"
+
+    def save_graph(self):
+        try:
+            now = datetime.now().strftime("/%d_%m_%Y_%H_%M_%S.jpg")
+            disk = str(DISK_ADDRESS) + now
+            self.fig.savefig(disk)
+            print("sucessfully save graph")
+            toast("sucessfully save graph")
+        except:
+            print("error saving graph")
+            toast("error saving graph")
+                
+    def autosave_graph(self):
+        try:
+            now = datetime.now().strftime("/%d_%m_%Y_%H_%M_%S.jpg")
+            cwd = os.getcwd()
+            disk = cwd + now
+            self.fig.savefig(disk)
+            print("sucessfully auto save graph")
+            # toast("sucessfully save graph")
+        except:
+            print("error auto saving graph")
+            # toast("error saving graph")
+    
+    def nav_datalog_history(self):
+        self.screen_manager.current = 'screen_datalog_history'
+
+    def nav_amp_chart(self):
+        self.screen_manager.current = 'screen_amp_chart'
+
+    def nav_main_menu(self):
+        self.screen_manager.current = 'screen_main_menu'
+
+    def nav_info(self):
+        self.screen_manager.current = 'screen_info' 
 
 class ESPMotorControllerApp(MDApp):
     def __init__(self, **kwargs):
@@ -698,14 +706,14 @@ class ESPMotorControllerApp(MDApp):
         self.theme_cls.primary_palette = "Blue"
         self.theme_cls.accent_palette = "Gray"
         self.icon = 'asset/Icon_Logo.png'
-        Window.fullscreen = 'auto'
-        Window.borderless = True
-        # Window.size = 1080, 640
-        # Window.allow_screensaver = True
+        # Window.fullscreen = 'auto'
+        # Window.borderless = True
+        Window.size = 1366, 768
+        Window.allow_screensaver = True
 
         screen = Builder.load_file('main.kv')
-
         return screen
+   
 
 
 if __name__ == '__main__':

@@ -2,8 +2,10 @@
 
 #:import NoTransition kivy.uix.screenmanager.NoTransition
 #:include screen_splash.kv
-#:include screen_choose_screen.kv
+#:include screen_main_menu.kv
 #:include screen_uno_modules.kv
+#:include screen_datalog_history.kv
+#:include screen_amp_chart.kv
 #:include screen_info.kv
 #:include screen_operate.kv
 #:include screen_maintenance.kv
@@ -17,12 +19,12 @@ ScreenManager:
         ScreenSplash:
             app_window: app
             screen_manager: screen_manager
-            screen_choose_screen: screen_choose_screen
+            screen_main_menu: screen_main_menu
 
     Screen:
-        name: 'screen_choose_screen'
-        ScreenChooseScreen:
-            id: screen_choose_screen
+        name: 'screen_main_menu'
+        ScreenMainMenu:
+            id: screen_main_menu
             screen_manager: screen_manager
             screen_uno_modules: screen_uno_modules
 
@@ -36,6 +38,12 @@ ScreenManager:
         name: 'screen_datalog_history'
         ScreenDatalogHistory:
             id: screen_datalog_history
+            screen_manager: screen_manager
+
+    Screen:
+        name: 'screen_amp_chart'
+        ScreenAmpChart:
+            id: screen_amp_chart
             screen_manager: screen_manager
 
     Screen:

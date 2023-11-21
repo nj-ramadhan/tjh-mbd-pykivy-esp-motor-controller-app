@@ -11,6 +11,12 @@
 			spacing: 50
 			size_hint: 1, 0.15
 
+			MDRoundFlatIconButton:
+				id: bt_menu
+				icon: "menu"
+				size_hint_x: 0.25
+				on_press: root.nav_main_menu()
+
 			MDLabel:
 				id: subtitle            
 				text: "UNO MOTOR CONTROLLER"
@@ -44,19 +50,10 @@
 				font_size: 24
 				color: 1, 1, 1
 				size_hint_y: 0.1
-				
-		MDBoxLayout:
-			id: layout_title
-			orientation: "vertical"
-			md_bg_color: app.theme_cls.primary_color
-			size_hint: 1, 0.75
-			padding:10
-			spacing:10
 
-			MDCard:
-				id: payment_gopay
-				ripple_behavior: True
-				on_press: root.pay("GOPAY")
+		AnchorLayout:
+			id: layout_tables
+			padding: 50
 
 
 

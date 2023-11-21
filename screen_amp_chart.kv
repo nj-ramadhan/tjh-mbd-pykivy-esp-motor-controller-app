@@ -1,6 +1,6 @@
 #:kivy 2.1.0
 
-<ScreenQRPayment>:
+<ScreenAmpChart>:
     MDBoxLayout:
         orientation: "vertical"
 		# header layout
@@ -9,7 +9,7 @@
             orientation: "horizontal"
             padding: 20
 			spacing: 50
-			size_hint: 2, 0.15
+			size_hint: 1, 0.15
 
 			MDRoundFlatIconButton:
 				id: bt_menu
@@ -38,12 +38,12 @@
 			id: layout_title
 			orientation: "vertical"
 			md_bg_color: app.theme_cls.primary_color
-			size_hint: 2, 0.1
+			size_hint: 1, 0.1
 			padding:10
 			spacing:10
 
 			MDLabel:
-				text: "SCAN THIS QR FOR PAY"
+				text: "AMP CHART"
 				halign: 'center'
 				valign: 'middle'    
 				bold: True
@@ -51,34 +51,12 @@
 				color: 1, 1, 1
 				size_hint_y: 0.1
 
-		MDBoxLayout:
-			orientation: "vertical"
-			md_bg_color: app.theme_cls.accent_color
-			size_hint: 2, 0.75
-			padding:10
-			spacing:10
-
-			AsyncImage:
-				id: image_qr_payment
-				allow_stretch: True 
+		BoxLayout:
+			id: layout_amp_chart
+			orientation: "horizontal"
+			spacing: 20
 
 
-	MDRelativeLayout:
-		MDFillRoundFlatIconButton:
-			id: bt_screen_choose_product
-			icon: "cancel"
-			text: "CANCEL"
-			font_size: 28
-			size_hint: 0.4, 0.1
-			pos_hint: {"center_x": .8, "center_y": .1}
-			on_press: root.cancel()
 
-		MDFillRoundFlatIconButton:
-			id: bt_dummy_success
-			icon: "play"
-			text: " "
-			font_size: 14
-			size_hint: 0.18, 0.08
-			pos_hint: {"center_x": .75, "center_y": .80}
-			on_press: root.dummy_success()
+
 				
