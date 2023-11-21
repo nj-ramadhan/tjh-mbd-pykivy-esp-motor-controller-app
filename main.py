@@ -33,8 +33,6 @@ from gpiozero import DigitalOutputDevice
 from gpiozero import PWMOutputDevice
 import minimalmodbus
 import time
-import qrcode
-import requests
 
 colors = {
     "Blue": {
