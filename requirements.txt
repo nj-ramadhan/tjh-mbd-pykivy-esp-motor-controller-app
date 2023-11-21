@@ -1,4 +1,6 @@
-Kivy==2.1.0
+gpiozero==2.0
+Kivy==2.2.1
 kivymd==1.1.1
-matplotlib==3.6.2
-numpy==1.23.5
+matplotlib==3.7.2
+minimalmodbus==2.1.1
+numpy==1.25.1
