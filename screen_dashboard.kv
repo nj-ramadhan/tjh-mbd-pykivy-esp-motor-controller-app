@@ -1,0 +1,177 @@
+#:kivy 2.1.0
+<ScreenDashboard>:
+    MDBoxLayout:
+        orientation: "vertical"
+		# header layout
+        MDBoxLayout:
+            id: layout_header
+            orientation: "horizontal"
+            padding: 15
+			spacing: 15
+			size_hint: 1, 0.15
+
+			MDIconButton:
+				id: bt_menu
+				icon: "menu"
+				icon_size: "54sp"
+				size_hint_x: 0.1
+				on_press: root.nav_main_menu()
+
+			MDLabel:
+				id: subtitle            
+				text: "UNO MOTOR CONTROLLER"
+				halign: 'center'
+				valign: 'middle'
+				bold: True
+				font_size: 42
+				color: 0, 0, 0
+                    
+            Image:
+                id: logo
+                source:'asset/Main_Logo.png'
+                size_hint_x: 0.25
+                allow_stretch: True 
+
+		# choose product layout
+		MDBoxLayout:
+			id: layout_title
+			orientation: "vertical"
+			md_bg_color: app.theme_cls.primary_color
+			size_hint: 1, 0.1
+			padding:10
+			spacing:10
+
+			MDLabel:
+				text: "STATUS"
+				halign: 'center'
+				valign: 'middle'    
+				bold: True
+				font_size: 15
+				color: 1, 1, 1
+				size_hint_y: 0.1
+
+		MDBoxLayout:
+			id: layout_title
+			orientation: "vertical"
+			size_hint: 1, 0.75
+
+			MDBoxLayout:
+				id: layout_graph
+				orientation: "horizontal"
+				md_bg_color: app.theme_cls.accent_color
+				size_hint: 1, 0.4
+
+			MDGridLayout:
+				id: layout_dashboard
+				cols:2
+				row_force_default: True
+				row_default_height: 20
+				md_bg_color: app.theme_cls.accent_color
+				size_hint: 1, 0.6
+				padding:20
+				spacing:10
+
+				MDLabel:
+					text: "Drive Amps"
+					halign: 'left'
+					valign: 'middle'    
+					bold: True
+					font_size: 15
+
+				MDLabel:
+					id: lb_dashboard_drive_amps
+					text: "0.0 Amps"
+					halign: 'center'
+					valign: 'middle'    
+					bold: True
+					font_size: 15
+
+				MDLabel:
+					text: "Drive Volts"
+					halign: 'left'
+					valign: 'middle'    
+					bold: True
+					font_size: 15
+
+				MDLabel:
+					id: lb_dashboard_drive_volts
+					text: "0.0 Volts"
+					halign: 'center'
+					valign: 'middle'    
+					bold: True
+					font_size: 15
+
+				MDLabel:
+					text: "Downhole Volts"
+					halign: 'left'
+					valign: 'middle'    
+					bold: True
+					font_size: 15
+
+				MDLabel:
+					id: lb_dashboard_downhole_volts
+					text: "0.0 Volts"
+					halign: 'center'
+					valign: 'middle'    
+					bold: True
+					font_size: 15	
+
+				MDLabel:
+					text: "Intake Pressure"
+					halign: 'left'
+					valign: 'middle'    
+					bold: True
+					font_size: 15
+
+				MDLabel:
+					id: lb_dashboard_intake_pressure
+					text: "0.0 psi"
+					halign: 'center'
+					valign: 'middle'    
+					bold: True
+					font_size: 15	
+
+				MDLabel:
+					text: "Motor Temp"
+					halign: 'left'
+					valign: 'middle'    
+					bold: True
+					font_size: 15
+
+				MDLabel:
+					id: lb_dashboard_motor_temp
+					text: "80.0 " + chr(176) + "C"
+					halign: 'center'
+					valign: 'middle'    
+					bold: True
+					font_size: 15	
+
+				MDLabel:
+					text: "Intake Temp"
+					halign: 'left'
+					valign: 'middle'    
+					bold: True
+					font_size: 15
+
+				MDLabel:
+					id: lb_dashboard_intake_temp
+					text: "80.0 " + chr(176) + "C"
+					halign: 'center'
+					valign: 'middle'    
+					bold: True
+					font_size: 15
+
+				MDLabel:
+					text: "Last Shutdown"
+					halign: 'left'
+					valign: 'middle'    
+					bold: True
+					font_size: 15
+
+				MDLabel:
+					id: lb_dashboard_last_shutdown
+					text: "Manual Stop"
+					halign: 'center'
+					valign: 'middle'    
+					bold: True
+					font_size: 15

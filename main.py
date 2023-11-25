@@ -17,6 +17,8 @@ from pathlib import Path
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+from matplotlib import cm
+from matplotlib.patches import Circle, Wedge, Rectangle
 from matplotlib.figure import Figure
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 from matplotlib.ticker import AutoMinorLocator
@@ -119,7 +121,7 @@ class ScreenMainMenu(MDBoxLayout):
         self.screen_manager.current = 'screen_analog_setup'
 
     def nav_status(self):
-        self.screen_manager.current = 'screen_status'
+        self.screen_manager.current = 'screen_dashboard'
 
     def nav_fault_alarm(self):
         self.screen_manager.current = 'screen_fault_alarm'
@@ -178,35 +180,27 @@ class ScreenDatalogHistory(MDBoxLayout):
             column_data=[
                 ("No.", dp(10)),
                 ("Type", dp(35)),
-                ("Avg. Volt [V]", dp(30)),
-                ("Avg. Curr [A]", dp(30)),
-                ("Unbal. Volt [%]", dp(30)),
-                ("Unbal. Curr [%]", dp(30)),
+                ("Date/Time", dp(55)),
+                ("Message", dp(180)),
             ],
             row_data=[
                 (
                     "1",
                     ("alert", [255 / 256, 165 / 256, 0, 1],"Warning"),
-                    "95.5",
-                    "5.0",
-                    "0.5",
-                    "0.0",
+                    "23-11-2023/10:20:20",
+                    "Manual Off",
                 ),
                 (
                     "2",
                     ("alert-circle", [1, 0, 0, 1],"Alarm"),
-                    "75.0",
-                    "2.0",
-                    "0.5",
-                    "0.0",
+                    "23-11-2023/10:20:21",
+                    "Power Fail",
                 ),
                 (
                     "3",
                     ("checkbox-marked-circle",[39 / 256, 174 / 256, 96 / 256, 1],"Status"),
-                    "110",
-                    "7.0",
-                    "0.5",
-                    "0.2",
+                    "23-11-2023/10:20:23",
+                    "Contactor On",
                 ),
 
             ],
@@ -232,10 +226,9 @@ class ScreenDatalogHistory(MDBoxLayout):
             rows_num=4,
             column_data=[
                 ("No.", dp(10)),
-                ("Avg. Volt [V]", dp(27)),
-                ("Avg. Curr [A]", dp(27)),
-                ("Unbal. Volt [%]", dp(27)),
-                ("Unbal. Curr [%]", dp(27)),
+                ("Type", dp(35)),
+                ("Date/Time", dp(55)),
+                ("Message", dp(180)),
             ],
         )
         layout.add_widget(self.data_tables)
@@ -268,11 +261,121 @@ class ScreenAnalogSetup(MDBoxLayout):
     def nav_main_menu(self):
         self.screen_manager.current = 'screen_main_menu'
 
-class ScreenStatus(MDBoxLayout):
+class ScreenDashboard(MDBoxLayout):
     screen_manager = ObjectProperty(None)
 
     def __init__(self, **kwargs):
-        super(ScreenStatus, self).__init__(**kwargs)
+        super(ScreenDashboard, self).__init__(**kwargs)
+        Clock.schedule_once(self.delayed_init)
+
+    def degree_range(self, n): 
+        start = np.linspace(0,180,n+1, endpoint=True)[0:-1]
+        end = np.linspace(0,180,n+1, endpoint=True)[1::]
+        mid_points = start + ((end-start)/2.)
+        return np.c_[start, end], mid_points
+
+    def rot_text(self, ang): 
+        rotation = np.degrees(np.radians(ang) * np.pi / np.pi - np.radians(90))
+        return rotation
+
+    def gauge(self, labels, colors, arrow, title, ax):
+        N = len(labels)
+        
+        if arrow > N: 
+            raise Exception("\n\nThe category ({}) is greated than \
+            the length\nof the labels ({})".format(arrow, N))
+        """
+        if colors is a string, we assume it's a matplotlib colormap
+        and we discretize in N discrete colors 
+        """
+        if isinstance(colors, str):
+            cmap = cm.get_cmap(colors, N)
+            cmap = cmap(np.arange(N))
+            colors = cmap[::-1,:].tolist()
+        if isinstance(colors, list): 
+            if len(colors) == N:
+                colors = colors[::-1]
+            else: 
+                raise Exception("\n\nnumber of colors {} not equal \
+                to number of categories{}\n".format(len(colors), N))
+
+        """
+        begins the plotting
+        """
+        ang_range, mid_points = self.degree_range(N)
+        labels = labels[::-1]
+        
+        """
+        plots the sectors and the arcs
+        """
+
+        patches = []
+        for ang, c in zip(ang_range, colors): 
+            # sectors
+            patches.append(Wedge((0.,0.), .4, *ang, facecolor='#bbbbbb', lw=2))
+            # arcs
+            patches.append(Wedge((0.,0.), .4, *ang, width=0.10, facecolor=c, lw=2, alpha=0.5))
+        
+        [ax.add_patch(p) for p in patches]
+
+        
+        """
+        set the labels (e.g. 'LOW','MEDIUM',...)
+        """
+        # for mid, lab in zip(mid_points, labels): 
+
+        #     ax.text(0.35 * np.cos(np.radians(mid)), 0.35 * np.sin(np.radians(mid)), lab, horizontalalignment='center', verticalalignment='center', fontsize=9, fontweight='bold', rotation = self.rot_text(mid))
+
+        """
+        set the bottom banner and the title
+        """
+        r = Rectangle((-0.4,-0.1),0.8,0.1, facecolor='#bbbbbb', lw=2)
+        ax.add_patch(r)
+        
+        ax.text(0, -0.05, title, horizontalalignment='center', verticalalignment='center', fontsize=10)
+
+        """
+        plots the arrow now
+        """
+        pos = mid_points[abs(arrow - N)]
+        
+        ax.arrow(0, 0, 0.225 * np.cos(np.radians(pos)), 0.225 * np.sin(np.radians(pos)), width=0.02, head_width=0.06, head_length=0.1, fc='k', ec='k')
+        
+        ax.add_patch(Circle((0, 0), radius=0.02, facecolor='k'))
+        ax.add_patch(Circle((0, 0), radius=0.01, facecolor='w', zorder=11))
+
+        """
+        removes frame and ticks, and makes axis equal and tight
+        """
+        ax.set_frame_on(False)
+        ax.axes.set_xticks([])
+        ax.axes.set_yticks([])
+        ax.axis('equal')
+        # remove this as well
+        # plt.tight_layout()
+
+    def delayed_init(self, dt):
+        # self.fig, self.ax = plt.subplots()
+        
+        # self.fig.tight_layout()
+        # l, b, w, h = self.ax.get_position().bounds
+        # self.ax.set_position(pos=[l, b + 0.3*h, w, h*0.7])
+        
+        # self.ax.set_xlabel("distance [m]", fontsize=10)
+        # self.ax.set_ylabel("n", fontsize=10)
+
+        self.fig, ((self.ax0, self.ax1, self.ax2), (self.ax3, self.ax4, self.ax5)) = plt.subplots(2, 3)
+        self.fig.set_facecolor("#bbbbbb")
+        self.fig.set_alpha(0.0)
+
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=2, title='Drive Freq [Hz]', ax=self.ax0)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=3, title='Intake Press [psi]', ax=self.ax1)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=1, title='Intake Temp [C]', ax=self.ax2)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=1, title='Motor Amps [A]', ax=self.ax3)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=2, title='Dischrg Press [psi]', ax=self.ax4)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=3, title='Motor Temp [C]', ax=self.ax5)
+        
+        self.ids.layout_graph.add_widget(FigureCanvasKivyAgg(self.fig))        
 
     def nav_main_menu(self):
         self.screen_manager.current = 'screen_main_menu'
@@ -492,9 +595,9 @@ class ESPMotorControllerApp(MDApp):
         self.theme_cls.primary_palette = "Blue"
         self.theme_cls.accent_palette = "Gray"
         self.icon = 'asset/Icon_Logo.png'
-        Window.fullscreen = 'auto'
-        Window.borderless = True
-        # Window.size = 1024, 600
+        # Window.fullscreen = 'auto'
+        # Window.borderless = True
+        Window.size = 1024, 600
         Window.allow_screensaver = True
 
         screen = Builder.load_file('main.kv')

@@ -7,7 +7,7 @@
 #:include screen_uno_setup.kv
 #:include screen_datalog_history.kv
 #:include screen_analog_setup.kv
-#:include screen_status.kv
+#:include screen_dashboard.kv
 #:include screen_fault_alarm.kv
 #:include screen_scada_security.kv
 #:include screen_logic_function.kv
@@ -55,9 +55,9 @@ ScreenManager:
             screen_manager: screen_manager
 
     Screen:
-        name: 'screen_status'
-        ScreenStatus:
-            id: screen_status
+        name: 'screen_dashboard'
+        ScreenDashboard:
+            id: screen_dashboard
             screen_manager: screen_manager
 
     Screen:
