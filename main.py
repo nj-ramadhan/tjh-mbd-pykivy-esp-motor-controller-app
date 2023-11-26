@@ -413,25 +413,30 @@ class ScreenLogicFunction(MDBoxLayout):
 class ScreenAmpChart(MDBoxLayout):
     screen_manager = ObjectProperty(None)
 
+    n = 115
+    a = 0
+    data = np.random.uniform(100.0, 200.0, n)
+    data_angle = np.arange(0, n, 1)
+    theta = np.pi * np.deg2rad(data_angle)
+
     def __init__(self, **kwargs):
         super(ScreenAmpChart, self).__init__(**kwargs)
         Clock.schedule_once(self.delayed_init)
-        # Clock.schedule_interval(self.regular_check, 2)
+        Clock.schedule_interval(self.regular_check, 2)
 
     def regular_check(self, dt):
         try:
-            self.a
-            self.theta
-            self.data
-            self.show_data
-            self.show_theta
+            show_data = self.data[:self.a]
+            show_theta = self.theta[:self.a]
             
             self.fig = plt.figure()
-            self.ax = self.fig.add_subplot(111, polar=True)
-            self.ax.set_theta_offset(np.pi / 2)
-            self.ax.set_theta_direction(-1)
-            self.ax.set_rmax(200)
-            self.ax.set_xticklabels([
+            # self.fig, (self.ax0, self.ax1) = plt.subplots(1, 2)
+            self.ax0= self.fig.add_subplot(111, polar=True)
+            # self.ax0(polar=True)
+            self.ax0.set_theta_offset(np.pi / 2)
+            self.ax0.set_theta_direction(-1)
+            self.ax0.set_rmax(200)
+            self.ax0.set_xticklabels([
                 r'$day 1$',
                 r'$day 2$',
                 r'$day 3$',
@@ -441,47 +446,34 @@ class ScreenAmpChart(MDBoxLayout):
                 r'$day 7$',
                 r'$day 8$',
                 ])
-            self.ax.grid(True)
-            self.ax.set_title("Amp Chart", va='bottom')
-            self.ax.plot(self.theta, self.data, color='r', linewidth=2)
+            self.ax0.grid(True)
+            self.ax0.set_title("Amp Chart", va='bottom')
+            self.ax0.plot(show_theta, show_data, color='r', linewidth=2)
 
             self.a = self.a + 1
-            # self.fig.set_facecolor("#eeeeee")
+            
             # self.fig.tight_layout()
             
-            # self.ax.set_xlabel("distance [m]", fontsize=10)
-            # self.ax.set_ylabel("n", fontsize=10)
-            # self.ax.set_facecolor("#eeeeee")
+            # self.ax1.set_xlabel("time [hour]", fontsize=10)
+            # self.ax1.set_ylabel("n", fontsize=10)
+            # self.ax1.set_facecolor("#eeeeee")
 
-            # # datum location
-            # max_data = np.max(data_base[2,:data_limit])
-            # cmap, norm = mcolors.from_levels_and_colors([0.0, max_data, max_data * 2],['green','red'])
-            # self.ax.scatter(visualized_data_pos[0,:data_limit], -visualized_data_pos[1,:data_limit], c=data_base[2,:data_limit], cmap=cmap, norm=norm, label=l_electrode[0], marker='o')
-            # electrode location
+            # self.ax1.plot(show_theta, show_data)
+
+            self.fig.set_facecolor("#eeeeee")
+            
             self.ids.layout_amp_chart.clear_widgets()
             self.ids.layout_amp_chart.add_widget(FigureCanvasKivyAgg(self.fig))
 
             print("successfully show graphic")
         
-        except:
-            print("error show graphic")
+        except Exception as e:
+            print(e)
 
 
     def delayed_init(self, dt):
-        # try:
-        self.n = 115
-        self.a = 0
-        self.data = np.random.uniform(100.0, 200.0, self.n)
-        self.data_angle = np.arange(0, self.n, 1)
-        self.theta = np.pi * np.deg2rad(self.data_angle)
-
-        # self.show_theta = np.array([])
-        # self.show_data = np.array([])
-
         self.fig, self.ax = plt.subplots(subplot_kw={'projection': 'polar'})
 
-        # self.fig = plt.figure()
-        # self.ax = self.fig.add_subplot(111, polar=True)
         self.ax.set_theta_offset(np.pi / 2)
         self.ax.set_theta_direction(-1)
         self.ax.set_rmax(200)
@@ -499,31 +491,8 @@ class ScreenAmpChart(MDBoxLayout):
         self.ax.set_title("Amp Chart", va='bottom')
         self.ax.plot(self.theta, self.data, color='r', linewidth=2)
 
-        # self.fig, self.ax = plt.subplots()
-        # self.fig.set_facecolor("#eeeeee")
-        # self.fig.tight_layout()
-        # l, b, w, h = self.ax.get_position().bounds
-        # self.ax.set_position(pos=[l, b + 0.3*h, w, h*0.7])
-        
-        # self.ax.set_xlabel("distance [m]", fontsize=10)
-        # self.ax.set_ylabel("n", fontsize=10)
-
-        self.ids.layout_amp_chart.add_widget(FigureCanvasKivyAgg(self.fig))    
-
-        # except:
-        #     print("error show graph")
-
-    # def delayed_init(self, dt):
-    #     self.fig, self.ax = plt.subplots()
-    #     self.fig.set_facecolor("#eeeeee")
-    #     self.fig.tight_layout()
-    #     l, b, w, h = self.ax.get_position().bounds
-    #     self.ax.set_position(pos=[l, b + 0.3*h, w, h*0.7])
-        
-    #     self.ax.set_xlabel("distance [m]", fontsize=10)
-    #     self.ax.set_ylabel("n", fontsize=10)
-
-    #     self.ids.layout_amp_chart.add_widget(FigureCanvasKivyAgg(self.fig))        
+        self.fig.set_facecolor("#eeeeee")
+        self.ids.layout_amp_chart.add_widget(FigureCanvasKivyAgg(self.fig))         
 
     def measure(self):
         global flag_run
