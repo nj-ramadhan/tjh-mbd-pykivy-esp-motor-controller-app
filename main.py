@@ -50,9 +50,9 @@ colors = {
     },
 
     "Gray": {
-        "200": "#bbbbbb",
-        "500": "#bbbbbb",
-        "700": "#bbbbbb",
+        "200": "#eeeeee",
+        "500": "#eeeeee",
+        "700": "#eeeeee",
     },
 
     "Light": {
@@ -312,7 +312,7 @@ class ScreenDashboard(MDBoxLayout):
         patches = []
         for ang, c in zip(ang_range, colors): 
             # sectors
-            patches.append(Wedge((0.,0.), .4, *ang, facecolor='#bbbbbb', lw=2))
+            patches.append(Wedge((0.,0.), .4, *ang, facecolor='#eeeeee', lw=2))
             # arcs
             patches.append(Wedge((0.,0.), .4, *ang, width=0.10, facecolor=c, lw=2, alpha=0.5))
         
@@ -329,10 +329,11 @@ class ScreenDashboard(MDBoxLayout):
         """
         set the bottom banner and the title
         """
-        r = Rectangle((-0.4,-0.1),0.8,0.1, facecolor='#bbbbbb', lw=2)
+        r = Rectangle((-0.4,-0.1),0.8,0.1, facecolor='#eeeeee', lw=2)
         ax.add_patch(r)
         
-        ax.text(0, -0.05, title, horizontalalignment='center', verticalalignment='center', fontsize=10)
+        ax.text(0, -0.15, arrow, horizontalalignment='center', verticalalignment='center', fontsize=12)
+        ax.text(0, -0.3, title, horizontalalignment='center', verticalalignment='center', fontsize=10)
 
         """
         plots the arrow now
@@ -364,16 +365,18 @@ class ScreenDashboard(MDBoxLayout):
         # self.ax.set_xlabel("distance [m]", fontsize=10)
         # self.ax.set_ylabel("n", fontsize=10)
 
-        self.fig, ((self.ax0, self.ax1, self.ax2), (self.ax3, self.ax4, self.ax5)) = plt.subplots(2, 3)
-        self.fig.set_facecolor("#bbbbbb")
+        self.fig, ((self.ax0, self.ax1, self.ax2, self.ax3), (self.ax4, self.ax5, self.ax6, self.ax7)) = plt.subplots(2, 4)
+        self.fig.set_facecolor("#eeeeee")
         self.fig.set_alpha(0.0)
 
-        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=2, title='Drive Freq [Hz]', ax=self.ax0)
-        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=3, title='Intake Press [psi]', ax=self.ax1)
-        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=1, title='Intake Temp [C]', ax=self.ax2)
-        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=1, title='Motor Amps [A]', ax=self.ax3)
-        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=2, title='Dischrg Press [psi]', ax=self.ax4)
-        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=3, title='Motor Temp [C]', ax=self.ax5)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=2, title='Frequency [Hz]', ax=self.ax0)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=3, title='Motor Amp [A]', ax=self.ax1)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=1, title='Voltage [V]', ax=self.ax2)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=1, title='Voltage Unbal [%]', ax=self.ax3)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=2, title='Current Unbal [%]', ax=self.ax4)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=3, title='Intake Press [psi]', ax=self.ax5)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=3, title='Dischrg Press [psi]', ax=self.ax6)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=3, title='Motor Temp [F]', ax=self.ax7)
         
         self.ids.layout_graph.add_widget(FigureCanvasKivyAgg(self.fig))        
 

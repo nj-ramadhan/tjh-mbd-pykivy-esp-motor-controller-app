@@ -57,121 +57,140 @@
 
 			MDBoxLayout:
 				id: layout_graph
-				orientation: "horizontal"
-				md_bg_color: app.theme_cls.accent_color
-				size_hint: 1, 0.4
-
-			MDGridLayout:
-				id: layout_dashboard
-				cols:2
-				row_force_default: True
-				row_default_height: 20
 				md_bg_color: app.theme_cls.accent_color
 				size_hint: 1, 0.6
-				padding:20
-				spacing:10
 
-				MDLabel:
-					text: "Drive Amps"
-					halign: 'left'
-					valign: 'middle'    
-					bold: True
-					font_size: 15
+			MDBoxLayout:
+				id: layout_title
+				md_bg_color: app.theme_cls.accent_color
+				orientation: "horizontal"
+				size_hint: 1, 0.4
 
-				MDLabel:
-					id: lb_dashboard_drive_amps
-					text: "0.0 Amps"
-					halign: 'center'
-					valign: 'middle'    
-					bold: True
-					font_size: 15
+				MDGridLayout:
+					id: layout_dashboard
+					cols:2
+					row_force_default: True
+					row_default_height: 20
+					md_bg_color: app.theme_cls.accent_color
+					padding:20
+					spacing:10
 
-				MDLabel:
-					text: "Drive Volts"
-					halign: 'left'
-					valign: 'middle'    
-					bold: True
-					font_size: 15
+					MDLabel:
+						text: "Mode"
+						halign: 'left'
+						valign: 'middle'    
+						bold: True
+						font_size: 15
 
-				MDLabel:
-					id: lb_dashboard_drive_volts
-					text: "0.0 Volts"
-					halign: 'center'
-					valign: 'middle'    
-					bold: True
-					font_size: 15
+					MDLabel:
+						id: lb_dashboard_drive_amps
+						text: "--"
+						halign: 'center'
+						valign: 'middle'    
+						bold: True
+						font_size: 15
 
-				MDLabel:
-					text: "Downhole Volts"
-					halign: 'left'
-					valign: 'middle'    
-					bold: True
-					font_size: 15
+					MDLabel:
+						text: "Motor"
+						halign: 'left'
+						valign: 'middle'    
+						bold: True
+						font_size: 15
 
-				MDLabel:
-					id: lb_dashboard_downhole_volts
-					text: "0.0 Volts"
-					halign: 'center'
-					valign: 'middle'    
-					bold: True
-					font_size: 15	
+					MDLabel:
+						id: lb_dashboard_drive_volts
+						text: "Stopped 0d 00:00:00"
+						halign: 'center'
+						valign: 'middle'    
+						bold: True
+						font_size: 15
 
-				MDLabel:
-					text: "Intake Pressure"
-					halign: 'left'
-					valign: 'middle'    
-					bold: True
-					font_size: 15
+					MDLabel:
+						text: "Speed SOurce"
+						halign: 'left'
+						valign: 'middle'    
+						bold: True
+						font_size: 15
 
-				MDLabel:
-					id: lb_dashboard_intake_pressure
-					text: "0.0 psi"
-					halign: 'center'
-					valign: 'middle'    
-					bold: True
-					font_size: 15	
+					MDLabel:
+						id: lb_dashboard_downhole_volts
+						text: "Target Speed"
+						halign: 'center'
+						valign: 'middle'    
+						bold: True
+						font_size: 15	
 
-				MDLabel:
-					text: "Motor Temp"
-					halign: 'left'
-					valign: 'middle'    
-					bold: True
-					font_size: 15
+					MDLabel:
+						text: "Tool"
+						halign: 'left'
+						valign: 'middle'    
+						bold: True
+						font_size: 15
 
-				MDLabel:
-					id: lb_dashboard_motor_temp
-					text: "80.0 " + chr(176) + "C"
-					halign: 'center'
-					valign: 'middle'    
-					bold: True
-					font_size: 15	
+					MDLabel:
+						id: lb_dashboard_intake_pressure
+						text: "None"
+						halign: 'center'
+						valign: 'middle'    
+						bold: True
+						font_size: 15	
 
-				MDLabel:
-					text: "Intake Temp"
-					halign: 'left'
-					valign: 'middle'    
-					bold: True
-					font_size: 15
+					MDLabel:
+						text: "Tool Status"
+						halign: 'left'
+						valign: 'middle'    
+						bold: True
+						font_size: 15
 
-				MDLabel:
-					id: lb_dashboard_intake_temp
-					text: "80.0 " + chr(176) + "C"
-					halign: 'center'
-					valign: 'middle'    
-					bold: True
-					font_size: 15
+					MDLabel:
+						id: lb_dashboard_motor_temp
+						text: "<PIC_STATUS & PIC_TOOL>"
+						halign: 'center'
+						valign: 'middle'    
+						bold: True
+						font_size: 15	
 
-				MDLabel:
-					text: "Last Shutdown"
-					halign: 'left'
-					valign: 'middle'    
-					bold: True
-					font_size: 15
+					MDLabel:
+						text: "Trending"
+						halign: 'left'
+						valign: 'middle'    
+						bold: True
+						font_size: 15
 
-				MDLabel:
-					id: lb_dashboard_last_shutdown
-					text: "Manual Stop"
-					halign: 'center'
-					valign: 'middle'    
-					bold: True
-					font_size: 15
+					MDLabel:
+						id: lb_dashboard_intake_temp
+						text: "--"
+						halign: 'center'
+						valign: 'middle'    
+						bold: True
+						font_size: 15
+
+				MDGridLayout:
+					cols:2
+					row_force_default: True
+					row_default_height: 20
+					md_bg_color: app.theme_cls.accent_color
+					padding:20
+					spacing:10
+
+					MDLabel:
+						text: "Last Stopped By:"
+						halign: 'left'
+						valign: 'middle'    
+						bold: True
+						font_size: 15
+
+					MDLabel:
+						id: lb_dashboard_last_shutdown
+						text: "Manual Stop"
+						halign: 'center'
+						valign: 'middle'    
+						bold: True
+						font_size: 15
+
+					MDLabel:
+						text: "Alarms"
+						halign: 'left'
+						valign: 'middle'    
+						bold: True
+						font_size: 15
