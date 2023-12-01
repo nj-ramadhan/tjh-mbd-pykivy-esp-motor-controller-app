@@ -59,25 +59,6 @@
 			padding:20
 			spacing:20
 
-			MDCard:
-				id: card_uno_modules
-				ripple_behavior: True
-				radius:  [dp(24), dp(24), dp(24), dp(24)]
-				on_press: root.nav_uno_modules()
-				padding:20
-
-				Image:
-					source:'asset/icon_module.png'
-					size_hint_x: 0.25
-					allow_stretch: True 
-					
-				MDLabel:
-					text: "UNO MODULES"
-					halign: 'center'
-					valign: 'middle'
-					font_size: 28
-					bold: True
-
 #Edit tampilan setting tugasnya Ahmed1
 			MDCard:
 				id: card_uno_setup
@@ -119,7 +100,7 @@
 
 # Analog setup sama dengan DHT setup
 			MDCard:
-				id: card_analog_setup
+				id: card_dht_setup
 				ripple_behavior: True
 				radius:  [dp(24), dp(24), dp(24), dp(24)]
 				on_press: root.nav_analog_setup()
@@ -131,7 +112,7 @@
 					allow_stretch: True 
 
 				MDLabel:
-					text: "ANALOG SETUP"
+					text: "DHT SETUP"
 					halign: 'center'
 					valign: 'middle'
 					font_size: 28
@@ -190,25 +171,6 @@
 
 				MDLabel:
 					text: "SCADA"
-					halign: 'center'
-					valign: 'middle'
-					font_size: 28
-					bold: True
-
-			MDCard:
-				id: card_logic_function
-				ripple_behavior: True
-				radius:  [dp(24), dp(24), dp(24), dp(24)]
-				on_press: root.nav_logic_function()
-				padding:20
-
-				Image:
-					source:'asset/icon_logic.png'
-					size_hint_x: 0.25
-					allow_stretch: True 
-
-				MDLabel:
-					text: "LOGIC FUNCTION"
 					halign: 'center'
 					valign: 'middle'
 					font_size: 28
