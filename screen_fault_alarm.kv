@@ -1,4 +1,30 @@
 #:kivy 2.1.0
+<MCQCheckBox@CheckBox>:
+    color: 0, 0, 0, 1
+    size_hint: 0.15, 1
+
+
+<MCQLabel@ButtonBehavior+Label>:
+    text_size: self.size
+    valign: 'middle'
+    font_size: '12sp'
+    color: 0, 0, 0, 1
+
+
+<MCQLabelCheckBox@BoxLayout>:
+    text: ''
+    group: ''
+	spacing:5
+
+    MCQCheckBox:
+        id: cb
+        group: root.group
+
+    MCQLabel:
+        on_press: cb._do_press()
+        text: root.text
+		spacing_x:
+
 <ScreenFaultAlarm>:
     MDBoxLayout:
         orientation: "vertical"
@@ -50,14 +76,1105 @@
 				color: 1, 1, 1
 				size_hint_y: 0.1
 				
-		MDGridLayout:
-			id: layout_status
-			cols:3
-			md_bg_color: app.theme_cls.accent_color
-			row_force_default: True
-			row_default_height: 200
-			size_hint: 1, 0.75
-			padding:20
-			spacing:20
+		ScrollView:
+			do_scroll_y: False
+			do_scroll_x: True
 
-				
+			MDBoxLayout:
+				orientation: "horizontal"
+				padding:10
+				spacing:10
+				size_hint_x: None
+				width: self.minimum_width
+
+				MDCard:
+					padding : 4
+					size_hint : None, 1
+					size: "400dp", "100dp"
+					line_color: 0.2, 0.2, 0.2, 0.8
+					style: "elevated"
+					md_bg_color: "#f6eeee"
+					shadow_softness:2
+					shadow_offset:0, 1
+
+					MDBoxLayout:
+						id: layout_uv
+						orientation: "vertical"
+						size_hint: 1, 1
+						padding:10
+
+						MDLabel:
+							text : "UNDERLOAD"
+							size_hint: 1, .1
+							font_size: 24
+							halign: 'center'
+							valign: 'middle'
+							bold: True
+
+						MDGridLayout:
+							id: layout_items_uv
+							cols:2
+							size_hint: 1, 1
+							padding:10
+
+							MDLabel:
+								text: "Set point"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Action"
+								size_hint_x: 1
+							MDGridLayout:
+								cols: 3
+								MCQLabelCheckBox:
+									text:"alarm"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"bypass"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"log"
+									group: 'opts'
+							MDLabel:
+								text: "Trip time"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Allowed restart number"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Auxiliary restart"
+								size_hint_x: 1
+							MDSwitch:
+								halign: "center"
+							MDLabel:
+								text: "Start bypass delay"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+
+				MDCard:
+					padding : 4
+					size_hint : None, 1
+					size: "400dp", "100dp"
+					line_color: 0.2, 0.2, 0.2, 0.8
+					style: "elevated"
+					md_bg_color: "#f6eeee"
+					shadow_softness:2
+					shadow_offset:0, 1
+
+					MDBoxLayout:
+						id: layout_uv
+						orientation: "vertical"
+						size_hint: 1, 1
+						padding:10
+
+						MDLabel:
+							text : "OVERLOAD"
+							size_hint: 1, .1
+							font_size: 24
+							halign: 'center'
+							valign: 'middle'
+							bold: True
+
+						MDGridLayout:
+							id: layout_items_uv
+							cols:2
+							size_hint: 1, 1
+							padding:10
+
+							MDLabel:
+								text: "Set point"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Action"
+								size_hint_x: 1
+							MDGridLayout:
+								cols: 3
+								MCQLabelCheckBox:
+									text:"alarm"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"bypass"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"log"
+									group: 'opts'
+							MDLabel:
+								text: "Trip time"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Allowed restart number"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Auxiliary restart"
+								size_hint_x: 1
+							MDSwitch:
+								halign: "center"
+							MDLabel:
+								text: "Start bypass delay"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+
+				MDCard:
+					padding : 4
+					size_hint : None, 1
+					size: "400dp", "100dp"
+					line_color: 0.2, 0.2, 0.2, 0.8
+					style: "elevated"
+					md_bg_color: "#f6eeee"
+					shadow_softness:2
+					shadow_offset:0, 1
+
+					MDBoxLayout:
+						id: layout_uv
+						orientation: "vertical"
+						size_hint: 1, 1
+						padding:10
+
+						MDLabel:
+							text : "UNDERVOLTAGE"
+							size_hint: 1, .1
+							font_size: 24
+							halign: 'center'
+							valign: 'middle'
+							bold: True
+
+						MDGridLayout:
+							id: layout_items_uv
+							cols:2
+							size_hint: 1, 1
+							padding:10
+
+							MDLabel:
+								text: "Set point"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Action"
+								size_hint_x: 1
+							MDGridLayout:
+								cols: 3
+								MCQLabelCheckBox:
+									text:"alarm"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"bypass"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"log"
+									group: 'opts'
+							MDLabel:
+								text: "Trip time"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Allowed restart number"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Auxiliary restart"
+								size_hint_x: 1
+							MDSwitch:
+								halign: "center"
+							MDLabel:
+								text: "Start bypass delay"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+
+				MDCard:
+					padding : 4
+					size_hint : None, 1
+					size: "400dp", "100dp"
+					line_color: 0.2, 0.2, 0.2, 0.8
+					style: "elevated"
+					md_bg_color: "#f6eeee"
+					shadow_softness:2
+					shadow_offset:0, 1
+
+					MDBoxLayout:
+						id: layout_uv
+						orientation: "vertical"
+						size_hint: 1, 1
+						padding:10
+
+						MDLabel:
+							text : "OVERVOLTAGE"
+							size_hint: 1, .1
+							font_size: 24
+							halign: 'center'
+							valign: 'middle'
+							bold: True
+
+						MDGridLayout:
+							id: layout_items_uv
+							cols:2
+							size_hint: 1, 1
+							padding:10
+
+							MDLabel:
+								text: "Set point"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Action"
+								size_hint_x: 1
+							MDGridLayout:
+								cols: 3
+								MCQLabelCheckBox:
+									text:"alarm"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"bypass"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"log"
+									group: 'opts'
+							MDLabel:
+								text: "Trip time"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Allowed restart number"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Auxiliary restart"
+								size_hint_x: 1
+							MDSwitch:
+								halign: "center"
+							MDLabel:
+								text: "Start bypass delay"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+
+				MDCard:
+					padding : 4
+					size_hint : None, 1
+					size: "400dp", "100dp"
+					line_color: 0.2, 0.2, 0.2, 0.8
+					style: "elevated"
+					md_bg_color: "#f6eeee"
+					shadow_softness:2
+					shadow_offset:0, 1
+
+					MDBoxLayout:
+						id: layout_uv
+						orientation: "vertical"
+						size_hint: 1, 1
+						padding:10
+
+						MDLabel:
+							text : "VOLTAGE UNBALANCE"
+							size_hint: 1, .1
+							font_size: 24
+							halign: 'center'
+							valign: 'middle'
+							bold: True
+
+						MDGridLayout:
+							id: layout_items_uv
+							cols:2
+							size_hint: 1, 1
+							padding:10
+
+							MDLabel:
+								text: "Set point"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Action"
+								size_hint_x: 1
+							MDGridLayout:
+								cols: 3
+								MCQLabelCheckBox:
+									text:"alarm"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"bypass"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"log"
+									group: 'opts'
+							MDLabel:
+								text: "Trip time"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Allowed restart number"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Auxiliary restart"
+								size_hint_x: 1
+							MDSwitch:
+								halign: "center"
+							MDLabel:
+								text: "Start bypass delay"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+
+				MDCard:
+					padding : 4
+					size_hint : None, 1
+					size: "400dp", "100dp"
+					line_color: 0.2, 0.2, 0.2, 0.8
+					style: "elevated"
+					md_bg_color: "#f6eeee"
+					shadow_softness:2
+					shadow_offset:0, 1
+
+					MDBoxLayout:
+						id: layout_uv
+						orientation: "vertical"
+						size_hint: 1, 1
+						padding:10
+
+						MDLabel:
+							text : "CURRENT UNBALANCE"
+							size_hint: 1, .1
+							font_size: 24
+							halign: 'center'
+							valign: 'middle'
+							bold: True
+
+						MDGridLayout:
+							id: layout_items_uv
+							cols:2
+							size_hint: 1, 1
+							padding:10
+
+							MDLabel:
+								text: "Set point"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Action"
+								size_hint_x: 1
+							MDGridLayout:
+								cols: 3
+								MCQLabelCheckBox:
+									text:"alarm"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"bypass"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"log"
+									group: 'opts'
+							MDLabel:
+								text: "Trip time"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Allowed restart number"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Auxiliary restart"
+								size_hint_x: 1
+							MDSwitch:
+								halign: "center"
+							MDLabel:
+								text: "Start bypass delay"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+
+				MDCard:
+					padding : 4
+					size_hint : None, 1
+					size: "400dp", "100dp"
+					line_color: 0.2, 0.2, 0.2, 0.8
+					style: "elevated"
+					md_bg_color: "#f6eeee"
+					shadow_softness:2
+					shadow_offset:0, 1
+
+					MDBoxLayout:
+						id: layout_uv
+						orientation: "vertical"
+						size_hint: 1, 1
+						padding:10
+
+						MDLabel:
+							text : "ROTATION"
+							size_hint: 1, .1
+							font_size: 24
+							halign: 'center'
+							valign: 'middle'
+							bold: True
+
+						MDGridLayout:
+							id: layout_items_uv
+							cols:2
+							size_hint: 1, 1
+							padding:10
+
+							MDLabel:
+								text: "Set point"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Action"
+								size_hint_x: 1
+							MDGridLayout:
+								cols: 3
+								MCQLabelCheckBox:
+									text:"alarm"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"bypass"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"log"
+									group: 'opts'
+							MDLabel:
+								text: "Trip time"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Allowed restart number"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Auxiliary restart"
+								size_hint_x: 1
+							MDSwitch:
+								halign: "center"
+							MDLabel:
+								text: "Start bypass delay"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+
+				MDCard:
+					padding : 4
+					size_hint : None, 1
+					size: "400dp", "100dp"
+					line_color: 0.2, 0.2, 0.2, 0.8
+					style: "elevated"
+					md_bg_color: "#f6eeee"
+					shadow_softness:2
+					shadow_offset:0, 1
+
+					MDBoxLayout:
+						id: layout_uv
+						orientation: "vertical"
+						size_hint: 1, 1
+						padding:10
+
+						MDLabel:
+							text : "BACKSPIN"
+							size_hint: 1, .1
+							font_size: 24
+							halign: 'center'
+							valign: 'middle'
+							bold: True
+
+						MDGridLayout:
+							id: layout_items_uv
+							cols:2
+							size_hint: 1, 1
+							padding:10
+
+							MDLabel:
+								text: "Set point"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Action"
+								size_hint_x: 1
+							MDGridLayout:
+								cols: 3
+								MCQLabelCheckBox:
+									text:"alarm"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"bypass"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"log"
+									group: 'opts'
+							MDLabel:
+								text: "Trip time"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Allowed restart number"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Auxiliary restart"
+								size_hint_x: 1
+							MDSwitch:
+								halign: "center"
+							MDLabel:
+								text: "Start bypass delay"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+
+				MDCard:
+					padding : 4
+					size_hint : None, 1
+					size: "400dp", "100dp"
+					line_color: 0.2, 0.2, 0.2, 0.8
+					style: "elevated"
+					md_bg_color: "#f6eeee"
+					shadow_softness:2
+					shadow_offset:0, 1
+
+					MDBoxLayout:
+						id: layout_uv
+						orientation: "vertical"
+						size_hint: 1, 1
+						padding:10
+
+						MDLabel:
+							text : "STALL"
+							size_hint: 1, .1
+							font_size: 24
+							halign: 'center'
+							valign: 'middle'
+							bold: True
+
+						MDGridLayout:
+							id: layout_items_uv
+							cols:2
+							size_hint: 1, 1
+							padding:10
+
+							MDLabel:
+								text: "Set point"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Action"
+								size_hint_x: 1
+							MDGridLayout:
+								cols: 3
+								MCQLabelCheckBox:
+									text:"alarm"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"bypass"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"log"
+									group: 'opts'
+							MDLabel:
+								text: "Trip time"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Allowed restart number"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Auxiliary restart"
+								size_hint_x: 1
+							MDSwitch:
+								halign: "center"
+							MDLabel:
+								text: "Start bypass delay"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+
+				MDCard:
+					padding : 4
+					size_hint : None, 1
+					size: "400dp", "100dp"
+					line_color: 0.2, 0.2, 0.2, 0.8
+					style: "elevated"
+					md_bg_color: "#f6eeee"
+					shadow_softness:2
+					shadow_offset:0, 1
+
+					MDBoxLayout:
+						id: layout_uv
+						orientation: "vertical"
+						size_hint: 1, 1
+						padding:10
+
+						MDLabel:
+							text : "SCT"
+							size_hint: 1, .1
+							font_size: 24
+							halign: 'center'
+							valign: 'middle'
+							bold: True
+
+						MDGridLayout:
+							id: layout_items_uv
+							cols:2
+							size_hint: 1, 1
+							padding:10
+
+							MDLabel:
+								text: "Set point"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Action"
+								size_hint_x: 1
+							MDGridLayout:
+								cols: 3
+								MCQLabelCheckBox:
+									text:"alarm"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"bypass"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"log"
+									group: 'opts'
+							MDLabel:
+								text: "Trip time"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Allowed restart number"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Auxiliary restart"
+								size_hint_x: 1
+							MDSwitch:
+								halign: "center"
+							MDLabel:
+								text: "Start bypass delay"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+
+				MDCard:
+					padding : 4
+					size_hint : None, 1
+					size: "400dp", "100dp"
+					line_color: 0.2, 0.2, 0.2, 0.8
+					style: "elevated"
+					md_bg_color: "#f6eeee"
+					shadow_softness:2
+					shadow_offset:0, 1
+
+					MDBoxLayout:
+						id: layout_uv
+						orientation: "vertical"
+						size_hint: 1, 1
+						padding:10
+
+						MDLabel:
+							text : "LEG GROUND"
+							size_hint: 1, .1
+							font_size: 24
+							halign: 'center'
+							valign: 'middle'
+							bold: True
+
+						MDGridLayout:
+							id: layout_items_uv
+							cols:2
+							size_hint: 1, 1
+							padding:10
+
+							MDLabel:
+								text: "Set point"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Action"
+								size_hint_x: 1
+							MDGridLayout:
+								cols: 3
+								MCQLabelCheckBox:
+									text:"alarm"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"bypass"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"log"
+									group: 'opts'
+							MDLabel:
+								text: "Trip time"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Allowed restart number"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Auxiliary restart"
+								size_hint_x: 1
+							MDSwitch:
+								halign: "center"
+							MDLabel:
+								text: "Start bypass delay"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+
+				MDCard:
+					padding : 4
+					size_hint : None, 1
+					size: "400dp", "100dp"
+					line_color: 0.2, 0.2, 0.2, 0.8
+					style: "elevated"
+					md_bg_color: "#f6eeee"
+					shadow_softness:2
+					shadow_offset:0, 1
+
+					MDBoxLayout:
+						id: layout_uv
+						orientation: "vertical"
+						size_hint: 1, 1
+						padding:10
+
+						MDLabel:
+							text : "DIGITAL INPUT"
+							size_hint: 1, .1
+							font_size: 24
+							halign: 'center'
+							valign: 'middle'
+							bold: True
+
+						MDGridLayout:
+							id: layout_items_uv
+							cols:2
+							size_hint: 1, 1
+							padding:10
+
+							MDLabel:
+								text: "Set point"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Action"
+								size_hint_x: 1
+							MDGridLayout:
+								cols: 3
+								MCQLabelCheckBox:
+									text:"alarm"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"bypass"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"log"
+									group: 'opts'
+							MDLabel:
+								text: "Trip time"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Allowed restart number"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Auxiliary restart"
+								size_hint_x: 1
+							MDSwitch:
+								halign: "center"
+							MDLabel:
+								text: "Start bypass delay"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+
+				MDCard:
+					padding : 4
+					size_hint : None, 1
+					size: "400dp", "100dp"
+					line_color: 0.2, 0.2, 0.2, 0.8
+					style: "elevated"
+					md_bg_color: "#f6eeee"
+					shadow_softness:2
+					shadow_offset:0, 1
+
+					MDBoxLayout:
+						id: layout_uv
+						orientation: "vertical"
+						size_hint: 1, 1
+						padding:10
+
+						MDLabel:
+							text : "ANALOG INPUT"
+							size_hint: 1, .1
+							font_size: 24
+							halign: 'center'
+							valign: 'middle'
+							bold: True
+
+						MDGridLayout:
+							id: layout_items_uv
+							cols:2
+							size_hint: 1, 1
+							padding:10
+
+							MDLabel:
+								text: "Set point"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Action"
+								size_hint_x: 1
+							MDGridLayout:
+								cols: 3
+								MCQLabelCheckBox:
+									text:"alarm"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"bypass"
+									group: 'opts'
+
+								MCQLabelCheckBox:
+									text:"log"
+									group: 'opts'
+							MDLabel:
+								text: "Trip time"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Allowed restart number"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"
+							MDLabel:
+								text: "Auxiliary restart"
+								size_hint_x: 1
+							MDSwitch:
+								halign: "center"
+							MDLabel:
+								text: "Start bypass delay"
+								size_hint_x: 1
+							MDTextField:
+								size_hint_x: 1
+								multiline: False
+								opacity: 1.0
+								valign: "top"

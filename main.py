@@ -55,6 +55,12 @@ colors = {
         "700": "#eeeeee",
     },
 
+    "Red": {
+        "A200": "#eeeeee",
+        "A500": "#eeeeee",
+        "A700": "#eeeeee",
+    },
+
     "Light": {
         "StatusBar": "E0E0E0",
         "AppBar": "#202020",
