@@ -1,0 +1,711 @@
+#:kivy 2.1.0
+<MCQCheckBox@CheckBox>:
+    color: 0, 0, 0, 1
+    size_hint: 0.15, 1
+
+
+<MCQLabel@ButtonBehavior+Label>:
+    text_size: self.size
+    valign: 'middle'
+    font_size: '12sp'
+    color: 0, 0, 0, 1
+
+
+<MCQLabelCheckBox@BoxLayout>:
+    text: ''
+    group: ''
+	spacing:5
+
+    MCQCheckBox:
+        id: cb
+        group: root.group
+
+    MCQLabel:
+        on_press: cb._do_press()
+        text: root.text
+		spacing_x:
+
+<ScreenParameterAlarm>:
+    MDBoxLayout:
+        orientation: "vertical"
+		# header layout
+        MDBoxLayout:
+            id: layout_header
+            orientation: "horizontal"
+            padding: 15
+			spacing: 15
+			size_hint: 1, 0.15
+
+			MDIconButton:
+				id: bt_menu
+				icon: "menu"
+				icon_size: "54sp"
+				size_hint_x: 0.1
+				on_press: root.nav_main_menu()
+
+			MDLabel:
+				id: subtitle            
+				text: "UNO MOTOR CONTROLLER"
+				halign: 'center'
+				valign: 'middle'
+				bold: True
+				font_size: 42
+				color: 0, 0, 0
+                    
+            Image:
+                id: logo
+                source:'asset/Main_Logo.png'
+                size_hint_x: 0.25
+                allow_stretch: True 
+
+		# choose product layout
+		MDBoxLayout:
+			id: layout_title
+			orientation: "vertical"
+			md_bg_color: app.theme_cls.primary_color
+			size_hint: 1, 0.1
+			padding:10
+			spacing:10
+
+			MDLabel:
+				text: "PARAMETER & ALARM"
+				halign: 'center'
+				valign: 'middle'    
+				bold: True
+				font_size: 32
+				color: 1, 1, 1
+				size_hint_y: 0.1
+				
+		MDGridLayout:
+			id: layout_products
+			cols:4
+			rows:2
+			md_bg_color: app.theme_cls.accent_color
+			padding:10
+			spacing:10
+
+			MDCard:
+				padding : 4
+				line_color: 0.2, 0.2, 0.2, 0.8
+				md_bg_color: "#EEEEEE"
+				shadow_softness:2
+				shadow_offset:0, 1
+
+				MDBoxLayout:
+					orientation: "vertical"
+					padding_vertical: 5
+					spacing: 5
+
+					MDLabel:
+						size_hint_y: .2
+						text : "LOAD"
+						font_size: 24
+						halign: 'center'
+						valign: 'middle'
+						bold: True
+						padding: 10
+					
+					MDBoxLayout:
+						id : load_gauge_layout
+						orientation: "vertical"
+					
+					MDGridLayout:
+						cols:3
+						rows:2
+						size_hint_y: 0.3
+
+						MDLabel:
+							text: "Load A"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "Load B"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "Load C"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						
+						MDLabel:
+							text: "2.2 A"
+							color: "#093824"
+							bold: True 
+							halign: "center"
+						MDLabel:
+							text: "2.4 A"
+							color: "#093824" 
+							bold: True 
+							halign: "center"
+						MDLabel:
+							text: "2.0 A"
+							color: "#093824" 
+							bold: True 
+							halign: "center"
+
+					MDGridLayout:
+						cols:2
+						rows:2
+						size_hint_y: 0.3
+						MDLabel:
+							text: "Unbalance"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "Motor Load"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						
+						MDLabel:
+							text: "0.0 %"
+							color: "#093824"
+							bold: True 
+							halign: "center"
+						MDLabel:
+							text: "0.0 %"
+							color: "#093824" 
+							bold: True 
+							halign: "center"
+			
+			MDCard:
+				padding : 4
+				line_color: 0.2, 0.2, 0.2, 0.8
+				md_bg_color: "#EEEEEE"
+				shadow_softness:2
+				shadow_offset:0, 1
+
+				MDBoxLayout:
+					orientation: "vertical"
+					padding_vertical: 5
+					spacing: 5
+
+					MDLabel:
+						size_hint_y: .2
+						text : "VOLTAGE"
+						font_size: 24
+						halign: 'center'
+						valign: 'middle'
+						bold: True
+						padding: 10
+					
+					MDBoxLayout:
+						id : voltage_gauge_layout
+						orientation: "vertical"
+					
+					MDGridLayout:
+						cols:3
+						rows:2
+						size_hint_y: 0.3
+
+						MDLabel:
+							text: "Voltage AB"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "Voltage AC"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "Voltage BC"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						
+						MDLabel:
+							text: "2.2 V"
+							color: "#093824"
+							bold: True 
+							halign: "center"
+						MDLabel:
+							text: "2.4 V"
+							color: "#093824" 
+							bold: True 
+							halign: "center"
+						MDLabel:
+							text: "2.0 V"
+							color: "#093824" 
+							bold: True 
+							halign: "center"
+
+					MDGridLayout:
+						cols:2
+						rows:2
+						size_hint_y: 0.3
+						MDLabel:
+						MDLabel:
+						MDLabel:
+						MDLabel:
+			
+			MDCard:
+				padding : 4
+				line_color: 0.2, 0.2, 0.2, 0.8
+				md_bg_color: "#EEEEEE"
+				shadow_softness:2
+				shadow_offset:0, 1
+
+				MDBoxLayout:
+					orientation: "vertical"
+					padding_vertical: 5
+					spacing: 5
+
+					MDLabel:
+						size_hint_y: .2
+						text : "SUPPLY VOLTAGE"
+						font_size: 24
+						halign: 'center'
+						valign: 'middle'
+						bold: True
+						padding: 10
+					
+					MDBoxLayout:
+						id : supply_voltage_gauge_layout
+						orientation: "vertical"
+					
+					MDGridLayout:
+						cols:3
+						rows:2
+						size_hint_y: 0.3
+
+						MDLabel:
+							text: "Voltage AB"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "Voltage AC"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "Voltage BC"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						
+						MDLabel:
+							text: "2.2 V"
+							color: "#093824"
+							bold: True 
+							halign: "center"
+						MDLabel:
+							text: "2.4 V"
+							color: "#093824" 
+							bold: True 
+							halign: "center"
+						MDLabel:
+							text: "2.0 V"
+							color: "#093824" 
+							bold: True 
+							halign: "center"
+
+					MDGridLayout:
+						cols:2
+						rows:2
+						size_hint_y: 0.3
+						MDLabel:
+						MDLabel:
+						MDLabel:
+						MDLabel:
+			
+			MDCard:
+				padding : 4
+				line_color: 0.2, 0.2, 0.2, 0.8
+				md_bg_color: "#EEEEEE"
+				shadow_softness:2
+				shadow_offset:0, 1
+
+				MDBoxLayout:
+					orientation: "vertical"
+					padding_vertical: 5
+					spacing: 5
+
+					MDLabel:
+						size_hint_y: .2
+						text : "FREQUENCY"
+						font_size: 24
+						halign: 'center'
+						valign: 'middle'
+						bold: True
+						padding: 10
+					
+					MDBoxLayout:
+						id : frequency_gauge_layout
+						orientation: "vertical"
+					
+					MDGridLayout:
+						cols:3
+						rows:2
+						size_hint_y: 0.3
+
+						MDLabel:
+							text: "Frequency A"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "Frequency B"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "Frequency C"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						
+						MDLabel:
+							text: "50.3 Hz"
+							color: "#093824"
+							bold: True 
+							halign: "center"
+						MDLabel:
+							text: "50.1 Hz"
+							color: "#093824" 
+							bold: True 
+							halign: "center"
+						MDLabel:
+							text: "50.3 Hz"
+							color: "#093824" 
+							bold: True 
+							halign: "center"
+
+					MDGridLayout:
+						cols:2
+						rows:2
+						size_hint_y: 0.3
+						MDLabel:
+						MDLabel:
+						MDLabel:
+						MDLabel:
+			
+			MDCard:
+				padding : 4
+				line_color: 0.2, 0.2, 0.2, 0.8
+				md_bg_color: "#EEEEEE"
+				shadow_softness:2
+				shadow_offset:0, 1
+
+				MDBoxLayout:
+					orientation: "vertical"
+					padding_vertical: 5
+					spacing: 5
+
+					MDLabel:
+						size_hint_y: .2
+						text : "ROTATION"
+						font_size: 24
+						halign: 'center'
+						valign: 'middle'
+						bold: True
+						padding: 10
+					
+					MDGridLayout:
+						cols:2
+						rows:3
+						row_force_default: True
+						row_default_height: 30
+
+						MDLabel:
+							text: "Setpoint"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "ACB"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Action"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "ALARM"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Detection"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "ACB"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+					
+					MDLabel:
+			
+			MDCard:
+				padding : 4
+				line_color: 0.2, 0.2, 0.2, 0.8
+				md_bg_color: "#EEEEEE"
+				shadow_softness:2
+				shadow_offset:0, 1
+
+				MDBoxLayout:
+					orientation: "vertical"
+					padding_vertical: 5
+					spacing: 5
+
+					MDLabel:
+						size_hint_y: .2
+						text : "SPIN"
+						font_size: 24
+						halign: 'center'
+						valign: 'middle'
+						bold: True
+						padding: 10
+					
+					MDGridLayout:
+						cols:2
+						rows:4
+						row_force_default: True
+						row_default_height: 30
+
+						MDLabel:
+							text: "Setpoint"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "ACB"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Action"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "ALARM"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Clear Time"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "2.5 ms"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Alarm on Reverse Spin"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "YES"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+					
+					MDLabel:
+			
+			MDCard:
+				padding : 4
+				line_color: 0.2, 0.2, 0.2, 0.8
+				md_bg_color: "#EEEEEE"
+				shadow_softness:2
+				shadow_offset:0, 1
+
+				MDBoxLayout:
+					orientation: "vertical"
+					padding_vertical: 5
+					spacing: 5
+
+					MDLabel:
+						size_hint_y: .2
+						text : "LEG GROUND"
+						font_size: 24
+						halign: 'center'
+						valign: 'middle'
+						bold: True
+						padding: 10
+					
+					MDGridLayout:
+						cols:2
+						rows:6
+						row_force_default: True
+						row_default_height: 30
+
+						MDLabel:
+							text: "Setpoint"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "ACB"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Action"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "ALARM"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Trip Time"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "1.2 ms"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Auto Restart Number"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "2"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Restart Delay"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "5 s"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Start Bypass"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "YES"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+					
+					MDLabel:
+			
+			MDCard:
+				padding : 4
+				line_color: 0.2, 0.2, 0.2, 0.8
+				md_bg_color: "#EEEEEE"
+				shadow_softness:2
+				shadow_offset:0, 1
+
+				MDBoxLayout:
+					orientation: "vertical"
+					padding_vertical: 5
+					spacing: 5
+
+					MDLabel:
+						size_hint_y: .2
+						text : "POWER FACTOR"
+						font_size: 24
+						halign: 'center'
+						valign: 'middle'
+						bold: True
+						padding: 10
+					
+					MDGridLayout:
+						cols:2
+						rows:6
+						row_force_default: True
+						row_default_height: 30
+
+						MDLabel:
+							text: "Setpoint"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "ACB"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Action"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "ALARM"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Trip Time"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "1.2 ms"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Auto Restart Number"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "2"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Restart Delay"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "5 s"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+
+						MDLabel:
+							text: "Start Bypass"
+							color: "#A9A9A9"
+							halign: "center"
+							font_size: "13"
+						MDLabel:
+							text: "YES"
+							color: "#093824"
+							halign: "center"
+							font_size: "13"
+					
+					MDLabel:
