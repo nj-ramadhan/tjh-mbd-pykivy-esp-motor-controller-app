@@ -25,7 +25,7 @@
         text: root.text
 		spacing_x:
 
-<ScreenLoadAlarm>:
+<ScreenFrequencyAlarm>:
     MDBoxLayout:
         orientation: "vertical"
 		# header layout
@@ -68,7 +68,7 @@
 			spacing:10
 
 			MDLabel:
-				text: "LOAD ALARM SETUP"
+				text: "FREQUENCY ALARM SETUP"
 				halign: 'center'
 				valign: 'middle'    
 				bold: True
@@ -109,7 +109,7 @@
 
                             MDLabel:
                                 # size_hint_y: 
-                                text : "LOAD"
+                                text : "FREQUENCY"
                                 font_size: 24
                                 halign: 'center'
                                 valign: 'middle'
@@ -117,7 +117,7 @@
                                 padding: 10
                         
                         MDBoxLayout:
-                            id : load_gauge_layout
+                            id : frequency_gauge_layout
                             orientation: "vertical"
                             size_hint_x: 1
                             height: "650dp"
@@ -128,17 +128,17 @@
                             size_hint_y: 0.3
 
                             MDLabel:
-                                text: "Load A"
+                                text: "Frequency A"
                                 color: "#A9A9A9"
                                 halign: "center"
                                 font_size: "13"
                             MDLabel:
-                                text: "Load B"
+                                text: "Frequency B"
                                 color: "#A9A9A9"
                                 halign: "center"
                                 font_size: "13"
                             MDLabel:
-                                text: "Load C"
+                                text: "Frequency C"
                                 color: "#A9A9A9"
                                 halign: "center"
                                 font_size: "13"
@@ -152,7 +152,7 @@
                                     theme_icon_color: "Custom"
                                     icon_color: "#8ADAB2"
                                 MDLabel:
-                                    text: "2.2 A"
+                                    text: "2.2 Hz"
                                     color: "#093824"
                                     bold: True 
                                     halign: "center"
@@ -171,7 +171,7 @@
                                     theme_icon_color: "Custom"
                                     icon_color: "#8ADAB2"
                                 MDLabel:
-                                    text: "2.4 A"
+                                    text: "2.4 Hz"
                                     color: "#093824"
                                     bold: True 
                                     halign: "center"
@@ -190,7 +190,7 @@
                                     theme_icon_color: "Custom"
                                     icon_color: "#8ADAB2"
                                 MDLabel:
-                                    text: "2.0 A"
+                                    text: "2.0 Hz"
                                     color: "#093824"
                                     bold: True 
                                     halign: "center"
@@ -201,22 +201,8 @@
                                     theme_icon_color: "Custom"
                                     icon_color: "#DF826C"
 
-                        MDGridLayout:
-                            cols:3
-                            rows:1
-                            size_hint_y: 0.3
-                            MDLabel:
-                            MDTextField:
-                                text: "0.0 %"
-                                hint_text: "CT Ratio"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                mode: "rectangle"
-                            MDLabel:
                         MDLabel:
-                            size_hint_y: 0.1
+                        #     size_hint_y: 0.1
 
                 MDCard:
                     padding : 4
@@ -240,7 +226,7 @@
 
                             MDLabel:
                                 size_hint_y: .2
-                                text : "UNDERLOAD"
+                                text : "HIGH FREQUENCY"
                                 font_size: 24
                                 halign: 'center'
                                 valign: 'middle'
@@ -336,7 +322,7 @@
 
                             MDLabel:
                                 size_hint_y: .2
-                                text : "OVERLOAD"
+                                text : "LOW FREQUENCY"
                                 font_size: 24
                                 halign: 'center'
                                 valign: 'middle'
@@ -409,291 +395,4 @@
                                 text_color_normal: "#093824"
                                 text_color_focus: "#093824"
                                 # mode: "rectangle"
-                
-                MDCard:
-                    padding : 4
-                    line_color: 0.2, 0.2, 0.2, 0.8
-                    md_bg_color: "#EEEEEE"
-                    shadow_softness:2
-                    shadow_offset:0, 1
-					size_hint : None, 1
-                    width: "400dp"
-
-                    MDBoxLayout:
-                        orientation: "vertical"
-                        padding_vertical: 5
-                        spacing: 5
-
-                        MDBoxLayout:
-                            orientation: "vertical"
-                            size_hint: 1, 0.07
-                            padding:10
-                            spacing:10
-
-                            MDLabel:
-                                size_hint_y: .2
-                                text : "UNBALANCE"
-                                font_size: 24
-                                halign: 'center'
-                                valign: 'middle'
-                                bold: True
-                                padding: 10
-                        
-                        MDGridLayout:
-                            cols:1
-                            rows:6
-                            # row_force_default: True
-                            # row_default_height: 30
-                            padding: 20,5
-
-                            MDTextField:
-                                text: "0.0 %"
-                                hint_text: "Setpoint"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "ALARM"
-                                hint_text: "Action"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "1.2 s"
-                                hint_text: "Trip Time"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "3"
-                                hint_text: "Auto Restart Number"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "5 s"
-                                hint_text: "Restart Delay"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "3 s"
-                                hint_text: "Start Bypass"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-                
-                MDCard:
-                    padding : 4
-                    line_color: 0.2, 0.2, 0.2, 0.8
-                    md_bg_color: "#EEEEEE"
-                    shadow_softness:2
-                    shadow_offset:0, 1
-					size_hint : None, 1
-                    width: "400dp"
-
-                    MDBoxLayout:
-                        orientation: "vertical"
-                        padding_vertical: 5
-                        spacing: 5
-
-                        MDBoxLayout:
-                            orientation: "vertical"
-                            size_hint: 1, 0.07
-                            padding:10
-                            spacing:10
-
-                            MDLabel:
-                                size_hint_y: .2
-                                text : "STALL"
-                                font_size: 24
-                                halign: 'center'
-                                valign: 'middle'
-                                bold: True
-                                padding: 10
-                        
-                        MDGridLayout:
-                            cols:1
-                            rows:6
-                            # row_force_default: True
-                            # row_default_height: 30
-                            padding: 20,5
-
-                            MDTextField:
-                                text: "0.0 %"
-                                hint_text: "Setpoint"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "ALARM"
-                                hint_text: "Action"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "1.2 s"
-                                hint_text: "Trip Time"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "3"
-                                hint_text: "Auto Restart Number"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "5 s"
-                                hint_text: "Restart Delay"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "3 s"
-                                hint_text: "Start Bypass"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-                
-                MDCard:
-                    padding : 4
-                    line_color: 0.2, 0.2, 0.2, 0.8
-                    md_bg_color: "#EEEEEE"
-                    shadow_softness:2
-                    shadow_offset:0, 1
-					size_hint : None, 1
-                    width: "400dp"
-
-                    MDBoxLayout:
-                        orientation: "vertical"
-                        padding_vertical: 5
-                        spacing: 5
-
-                        MDBoxLayout:
-                            orientation: "vertical"
-                            size_hint: 1, 0.07
-                            padding:10
-                            spacing:10
-
-                            MDLabel:
-                                size_hint_y: .2
-                                text : "SHORT CIRCUIT"
-                                font_size: 24
-                                halign: 'center'
-                                valign: 'middle'
-                                bold: True
-                                padding: 10
-                        
-                        MDGridLayout:
-                            cols:1
-                            rows:6
-                            # row_force_default: True
-                            # row_default_height: 30
-                            padding: 20,5
-
-                            MDTextField:
-                                text: "0.0 %"
-                                hint_text: "Setpoint"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "ALARM"
-                                hint_text: "Action"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "1.2 s"
-                                hint_text: "Trip Time"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "3"
-                                hint_text: "Auto Restart Number"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "5 s"
-                                hint_text: "Restart Delay"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
-
-                            MDTextField:
-                                text: "3 s"
-                                hint_text: "Start Bypass"
-                                # max_height: "10dp"
-                                hint_text_color_normal: "#A9A9A9"
-                                hint_text_color_focus: "#A9A9A9"
-                                text_color_normal: "#093824"
-                                text_color_focus: "#093824"
-                                # mode: "rectangle"
+               

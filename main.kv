@@ -11,6 +11,13 @@
 #:include screen_fault_alarm.kv
 #:include screen_parameter_alarm.kv
 #:include screen_load_alarm.kv
+#:include screen_voltage_alarm.kv
+#:include screen_supply_voltage_alarm.kv
+#:include screen_frequency_alarm.kv
+#:include screen_rotation_alarm.kv
+#:include screen_spin_alarm.kv
+#:include screen_leg_ground_alarm.kv
+#:include screen_power_factor_alarm.kv
 #:include screen_scada_security.kv
 #:include screen_logic_function.kv
 #:include screen_amp_chart.kv
@@ -78,6 +85,48 @@ ScreenManager:
         name: 'screen_load_alarm'
         ScreenLoadAlarm:
             id: screen_load_alarm
+            screen_manager: screen_manager
+    
+    Screen:
+        name: 'screen_voltage_alarm'
+        ScreenVoltageAlarm:
+            id: screen_voltage_alarm
+            screen_manager: screen_manager
+    
+    Screen:
+        name: 'screen_supply_voltage_alarm'
+        ScreenSupplyVoltageAlarm:
+            id: screen_supply_voltage_alarm
+            screen_manager: screen_manager
+    
+    Screen:
+        name: 'screen_frequency_alarm'
+        ScreenFrequencyAlarm:
+            id: screen_frequency_alarm
+            screen_manager: screen_manager
+    
+    Screen:
+        name: 'screen_rotation_alarm'
+        ScreenRotationAlarm:
+            id: screen_rotation_alarm
+            screen_manager: screen_manager
+    
+    Screen:
+        name: 'screen_spin_alarm'
+        ScreenSpinAlarm:
+            id: screen_spin_alarm
+            screen_manager: screen_manager
+    
+    Screen:
+        name: 'screen_leg_ground_alarm'
+        ScreenLegGroundAlarm:
+            id: screen_leg_ground_alarm
+            screen_manager: screen_manager
+    
+    Screen:
+        name: 'screen_power_factor_alarm'
+        ScreenPowerFactorAlarm:
+            id: screen_power_factor_alarm
             screen_manager: screen_manager
 
     Screen:

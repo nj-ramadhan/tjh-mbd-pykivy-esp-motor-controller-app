@@ -180,6 +180,7 @@
 				md_bg_color: "#EEEEEE"
 				shadow_softness:2
 				shadow_offset:0, 1
+				on_release: root.screen_voltage_alarm()
 
 				MDBoxLayout:
 					orientation: "vertical"
@@ -251,6 +252,7 @@
 				md_bg_color: "#EEEEEE"
 				shadow_softness:2
 				shadow_offset:0, 1
+				on_release: root.screen_supply_voltage_alarm()
 
 				MDBoxLayout:
 					orientation: "vertical"
@@ -322,6 +324,7 @@
 				md_bg_color: "#EEEEEE"
 				shadow_softness:2
 				shadow_offset:0, 1
+				on_release: root.screen_frequency_alarm()
 
 				MDBoxLayout:
 					orientation: "vertical"
@@ -393,6 +396,7 @@
 				md_bg_color: "#EEEEEE"
 				shadow_softness:2
 				shadow_offset:0, 1
+				on_release: root.screen_rotation_alarm()
 
 				MDBoxLayout:
 					orientation: "vertical"
@@ -455,6 +459,7 @@
 				md_bg_color: "#EEEEEE"
 				shadow_softness:2
 				shadow_offset:0, 1
+				on_release: root.screen_spin_alarm()
 
 				MDBoxLayout:
 					orientation: "vertical"
@@ -482,7 +487,7 @@
 							halign: "center"
 							font_size: "13"
 						MDLabel:
-							text: "ACB"
+							text: "200 Hz"
 							color: "#093824"
 							halign: "center"
 							font_size: "13"
@@ -504,7 +509,7 @@
 							halign: "center"
 							font_size: "13"
 						MDLabel:
-							text: "2.5 ms"
+							text: "2.5 s"
 							color: "#093824"
 							halign: "center"
 							font_size: "13"
@@ -528,6 +533,7 @@
 				md_bg_color: "#EEEEEE"
 				shadow_softness:2
 				shadow_offset:0, 1
+				on_release: root.screen_leg_ground_alarm()
 
 				MDBoxLayout:
 					orientation: "vertical"
@@ -555,7 +561,7 @@
 							halign: "center"
 							font_size: "13"
 						MDLabel:
-							text: "ACB"
+							text: "56 %"
 							color: "#093824"
 							halign: "center"
 							font_size: "13"
@@ -577,7 +583,7 @@
 							halign: "center"
 							font_size: "13"
 						MDLabel:
-							text: "1.2 ms"
+							text: "1.2 s"
 							color: "#093824"
 							halign: "center"
 							font_size: "13"
@@ -610,7 +616,7 @@
 							halign: "center"
 							font_size: "13"
 						MDLabel:
-							text: "YES"
+							text: "4 s"
 							color: "#093824"
 							halign: "center"
 							font_size: "13"
@@ -623,6 +629,7 @@
 				md_bg_color: "#EEEEEE"
 				shadow_softness:2
 				shadow_offset:0, 1
+				on_release: root.screen_power_factor_alarm()
 
 				MDBoxLayout:
 					orientation: "vertical"
@@ -650,7 +657,7 @@
 							halign: "center"
 							font_size: "13"
 						MDLabel:
-							text: "ACB"
+							text: "98 %"
 							color: "#093824"
 							halign: "center"
 							font_size: "13"
@@ -672,7 +679,7 @@
 							halign: "center"
 							font_size: "13"
 						MDLabel:
-							text: "1.2 ms"
+							text: "1.2 s"
 							color: "#093824"
 							halign: "center"
 							font_size: "13"
@@ -705,7 +712,7 @@
 							halign: "center"
 							font_size: "13"
 						MDLabel:
-							text: "YES"
+							text: "3 s"
 							color: "#093824"
 							halign: "center"
 							font_size: "13"
