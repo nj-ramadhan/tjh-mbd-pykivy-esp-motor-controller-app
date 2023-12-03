@@ -10,6 +10,7 @@
 #:include screen_dashboard.kv
 #:include screen_fault_alarm.kv
 #:include screen_parameter_alarm.kv
+#:include screen_load_alarm.kv
 #:include screen_scada_security.kv
 #:include screen_logic_function.kv
 #:include screen_amp_chart.kv
@@ -71,6 +72,12 @@ ScreenManager:
         name: 'screen_parameter_alarm'
         ScreenParameterAlarm:
             id: screen_parameter_alarm
+            screen_manager: screen_manager
+    
+    Screen:
+        name: 'screen_load_alarm'
+        ScreenLoadAlarm:
+            id: screen_load_alarm
             screen_manager: screen_manager
 
     Screen:

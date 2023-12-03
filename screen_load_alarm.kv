@@ -1,0 +1,699 @@
+#:kivy 2.1.0
+<MCQCheckBox@CheckBox>:
+    color: 0, 0, 0, 1
+    size_hint: 0.15, 1
+
+
+<MCQLabel@ButtonBehavior+Label>:
+    text_size: self.size
+    valign: 'middle'
+    font_size: '12sp'
+    color: 0, 0, 0, 1
+
+
+<MCQLabelCheckBox@BoxLayout>:
+    text: ''
+    group: ''
+	spacing:5
+
+    MCQCheckBox:
+        id: cb
+        group: root.group
+
+    MCQLabel:
+        on_press: cb._do_press()
+        text: root.text
+		spacing_x:
+
+<ScreenLoadAlarm>:
+    MDBoxLayout:
+        orientation: "vertical"
+		# header layout
+        MDBoxLayout:
+            id: layout_header
+            orientation: "horizontal"
+            padding: 15
+			spacing: 15
+			size_hint: 1, 0.08
+
+			MDIconButton:
+				id: bt_menu
+				icon: "menu"
+				icon_size: "25sp"
+				size_hint_x: 0.1
+				on_press: root.nav_main_menu()
+
+			MDLabel:
+				id: subtitle            
+				text: "UNO MOTOR CONTROLLER"
+				halign: 'center'
+				valign: 'middle'
+				bold: True
+				font_size: 30
+				color: 0, 0, 0
+                    
+            Image:
+                id: logo
+                source:'asset/Main_Logo.png'
+                size_hint_x: 0.25
+                allow_stretch: True 
+
+		# choose product layout
+		MDBoxLayout:
+			id: layout_title
+			orientation: "vertical"
+			md_bg_color: app.theme_cls.primary_color
+			size_hint: 1, 0.07
+			padding:10
+			spacing:10
+
+			MDLabel:
+				text: "LOAD ALARM SETUP"
+				halign: 'center'
+				valign: 'middle'    
+				bold: True
+				font_size: 20
+				color: 1, 1, 1
+				size_hint_y: 0.1
+				
+		ScrollView:
+			do_scroll_y: False
+			do_scroll_x: True
+
+			MDBoxLayout:
+				orientation: "horizontal"
+				padding:10
+				spacing:10
+				size_hint_x: None
+			    md_bg_color: app.theme_cls.accent_color
+				width: self.minimum_width
+                MDCard:
+                    padding : 4
+                    line_color: 0.2, 0.2, 0.2, 0.8
+                    md_bg_color: "#EEEEEE"
+                    shadow_softness:2
+                    shadow_offset:0, 1
+					size_hint : None, 1
+                    width: "400dp"
+
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        padding_vertical: 5
+                        spacing: 5
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            size_hint: 1, 0.2
+                            padding:10
+                            spacing:10
+
+                            MDLabel:
+                                # size_hint_y: 
+                                text : "LOAD"
+                                font_size: 24
+                                halign: 'center'
+                                valign: 'middle'
+                                bold: True
+                                padding: 10
+                        
+                        MDBoxLayout:
+                            id : load_gauge_layout
+                            orientation: "vertical"
+                            size_hint_x: 1
+                            height: "650dp"
+                        
+                        MDGridLayout:
+                            cols:3
+                            rows:2
+                            size_hint_y: 0.3
+
+                            MDLabel:
+                                text: "Load A"
+                                color: "#A9A9A9"
+                                halign: "center"
+                                font_size: "13"
+                            MDLabel:
+                                text: "Load B"
+                                color: "#A9A9A9"
+                                halign: "center"
+                                font_size: "13"
+                            MDLabel:
+                                text: "Load C"
+                                color: "#A9A9A9"
+                                halign: "center"
+                                font_size: "13"
+                            
+                            MDBoxLayout:
+                                orientation: "horizontal"
+                                MDIconButton:
+                                    icon: "plus-thick"
+                                    pos_hint: {"center_x": .0, "center_y": .5}
+                                    icon_size: "10sp"
+                                    theme_icon_color: "Custom"
+                                    icon_color: "#8ADAB2"
+                                MDLabel:
+                                    text: "2.2 A"
+                                    color: "#093824"
+                                    bold: True 
+                                    halign: "center"
+                                MDIconButton:
+                                    icon: "minus-thick"
+                                    pos_hint: {"center_x": .0, "center_y": .5}
+                                    icon_size: "10sp"
+                                    theme_icon_color: "Custom"
+                                    icon_color: "#DF826C"
+                            MDBoxLayout:
+                                orientation: "horizontal"
+                                MDIconButton:
+                                    icon: "plus-thick"
+                                    pos_hint: {"center_x": .0, "center_y": .5}
+                                    icon_size: "10sp"
+                                    theme_icon_color: "Custom"
+                                    icon_color: "#8ADAB2"
+                                MDLabel:
+                                    text: "2.4 A"
+                                    color: "#093824"
+                                    bold: True 
+                                    halign: "center"
+                                MDIconButton:
+                                    icon: "minus-thick"
+                                    pos_hint: {"center_x": .0, "center_y": .5}
+                                    icon_size: "10sp"
+                                    theme_icon_color: "Custom"
+                                    icon_color: "#DF826C"
+                            MDBoxLayout:
+                                orientation: "horizontal"
+                                MDIconButton:
+                                    icon: "plus-thick"
+                                    pos_hint: {"center_x": .0, "center_y": .5}
+                                    icon_size: "10sp"
+                                    theme_icon_color: "Custom"
+                                    icon_color: "#8ADAB2"
+                                MDLabel:
+                                    text: "2.0 A"
+                                    color: "#093824"
+                                    bold: True 
+                                    halign: "center"
+                                MDIconButton:
+                                    icon: "minus-thick"
+                                    pos_hint: {"center_x": .0, "center_y": .5}
+                                    icon_size: "10sp"
+                                    theme_icon_color: "Custom"
+                                    icon_color: "#DF826C"
+
+                        MDGridLayout:
+                            cols:3
+                            rows:1
+                            size_hint_y: 0.3
+                            MDLabel:
+                            MDTextField:
+                                text: "0.0 %"
+                                hint_text: "CT Ratio"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                mode: "rectangle"
+                            MDLabel:
+                        MDLabel:
+                            size_hint_y: 0.1
+
+                MDCard:
+                    padding : 4
+                    line_color: 0.2, 0.2, 0.2, 0.8
+                    md_bg_color: "#EEEEEE"
+                    shadow_softness:2
+                    shadow_offset:0, 1
+					size_hint : None, 1
+                    width: "400dp"
+
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        padding_vertical: 5
+                        spacing: 5
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            size_hint: 1, 0.07
+                            padding:10
+                            spacing:10
+
+                            MDLabel:
+                                size_hint_y: .2
+                                text : "UNDERLOAD"
+                                font_size: 24
+                                halign: 'center'
+                                valign: 'middle'
+                                bold: True
+                                padding: 10
+                        
+                        MDGridLayout:
+                            cols:1
+                            rows:6
+                            # row_force_default: True
+                            # row_default_height: 30
+                            padding: 20,5
+
+                            MDTextField:
+                                text: "0.0 %"
+                                hint_text: "Setpoint"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "ALARM"
+                                hint_text: "Action"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "1.2 ms"
+                                hint_text: "Trip Time"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "3"
+                                hint_text: "Auto Restart Number"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "5 s"
+                                hint_text: "Restart Delay"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "Yes"
+                                hint_text: "Start Bypass"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+                
+                MDCard:
+                    padding : 4
+                    line_color: 0.2, 0.2, 0.2, 0.8
+                    md_bg_color: "#EEEEEE"
+                    shadow_softness:2
+                    shadow_offset:0, 1
+					size_hint : None, 1
+                    width: "400dp"
+
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        padding_vertical: 5
+                        spacing: 5
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            size_hint: 1, 0.07
+                            padding:10
+                            spacing:10
+
+                            MDLabel:
+                                size_hint_y: .2
+                                text : "OVERLOAD"
+                                font_size: 24
+                                halign: 'center'
+                                valign: 'middle'
+                                bold: True
+                                padding: 10
+                        
+                        MDGridLayout:
+                            cols:1
+                            rows:6
+                            # row_force_default: True
+                            # row_default_height: 30
+                            padding: 20,5
+
+                            MDTextField:
+                                text: "0.0 %"
+                                hint_text: "Setpoint"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "ALARM"
+                                hint_text: "Action"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "1.2 ms"
+                                hint_text: "Trip Time"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "3"
+                                hint_text: "Auto Restart Number"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "5 s"
+                                hint_text: "Restart Delay"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "Yes"
+                                hint_text: "Start Bypass"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+                
+                MDCard:
+                    padding : 4
+                    line_color: 0.2, 0.2, 0.2, 0.8
+                    md_bg_color: "#EEEEEE"
+                    shadow_softness:2
+                    shadow_offset:0, 1
+					size_hint : None, 1
+                    width: "400dp"
+
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        padding_vertical: 5
+                        spacing: 5
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            size_hint: 1, 0.07
+                            padding:10
+                            spacing:10
+
+                            MDLabel:
+                                size_hint_y: .2
+                                text : "UNBALANCE"
+                                font_size: 24
+                                halign: 'center'
+                                valign: 'middle'
+                                bold: True
+                                padding: 10
+                        
+                        MDGridLayout:
+                            cols:1
+                            rows:6
+                            # row_force_default: True
+                            # row_default_height: 30
+                            padding: 20,5
+
+                            MDTextField:
+                                text: "0.0 %"
+                                hint_text: "Setpoint"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "ALARM"
+                                hint_text: "Action"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "1.2 ms"
+                                hint_text: "Trip Time"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "3"
+                                hint_text: "Auto Restart Number"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "5 s"
+                                hint_text: "Restart Delay"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "Yes"
+                                hint_text: "Start Bypass"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+                
+                MDCard:
+                    padding : 4
+                    line_color: 0.2, 0.2, 0.2, 0.8
+                    md_bg_color: "#EEEEEE"
+                    shadow_softness:2
+                    shadow_offset:0, 1
+					size_hint : None, 1
+                    width: "400dp"
+
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        padding_vertical: 5
+                        spacing: 5
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            size_hint: 1, 0.07
+                            padding:10
+                            spacing:10
+
+                            MDLabel:
+                                size_hint_y: .2
+                                text : "STALL"
+                                font_size: 24
+                                halign: 'center'
+                                valign: 'middle'
+                                bold: True
+                                padding: 10
+                        
+                        MDGridLayout:
+                            cols:1
+                            rows:6
+                            # row_force_default: True
+                            # row_default_height: 30
+                            padding: 20,5
+
+                            MDTextField:
+                                text: "0.0 %"
+                                hint_text: "Setpoint"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "ALARM"
+                                hint_text: "Action"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "1.2 ms"
+                                hint_text: "Trip Time"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "3"
+                                hint_text: "Auto Restart Number"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "5 s"
+                                hint_text: "Restart Delay"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "Yes"
+                                hint_text: "Start Bypass"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+                
+                MDCard:
+                    padding : 4
+                    line_color: 0.2, 0.2, 0.2, 0.8
+                    md_bg_color: "#EEEEEE"
+                    shadow_softness:2
+                    shadow_offset:0, 1
+					size_hint : None, 1
+                    width: "400dp"
+
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        padding_vertical: 5
+                        spacing: 5
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            size_hint: 1, 0.07
+                            padding:10
+                            spacing:10
+
+                            MDLabel:
+                                size_hint_y: .2
+                                text : "SHORT CIRCUIT"
+                                font_size: 24
+                                halign: 'center'
+                                valign: 'middle'
+                                bold: True
+                                padding: 10
+                        
+                        MDGridLayout:
+                            cols:1
+                            rows:6
+                            # row_force_default: True
+                            # row_default_height: 30
+                            padding: 20,5
+
+                            MDTextField:
+                                text: "0.0 %"
+                                hint_text: "Setpoint"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "ALARM"
+                                hint_text: "Action"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "1.2 ms"
+                                hint_text: "Trip Time"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "3"
+                                hint_text: "Auto Restart Number"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "5 s"
+                                hint_text: "Restart Delay"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
+
+                            MDTextField:
+                                text: "Yes"
+                                hint_text: "Start Bypass"
+                                # max_height: "10dp"
+                                hint_text_color_normal: "#A9A9A9"
+                                hint_text_color_focus: "#A9A9A9"
+                                text_color_normal: "#093824"
+                                text_color_focus: "#093824"
+                                # mode: "rectangle"
