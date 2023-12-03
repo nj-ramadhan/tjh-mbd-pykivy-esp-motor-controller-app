@@ -8,12 +8,12 @@
             orientation: "horizontal"
             padding: 15
 			spacing: 15
-			size_hint: 1, 0.15
+			size_hint: 1, 0.08
 
 			MDIconButton:
 				id: bt_menu
 				icon: "menu"
-				icon_size: "54sp"
+				icon_size: "25sp"
 				size_hint_x: 0.1
 				on_press: root.nav_main_menu()
 
@@ -23,7 +23,7 @@
 				halign: 'center'
 				valign: 'middle'
 				bold: True
-				font_size: 42
+				font_size: 30
 				color: 0, 0, 0
                     
             Image:
@@ -37,7 +37,7 @@
 			id: layout_title
 			orientation: "vertical"
 			md_bg_color: app.theme_cls.primary_color
-			size_hint: 1, 0.1
+			size_hint: 1, 0.07
 			padding:10
 			spacing:10
 
@@ -46,33 +46,32 @@
 				halign: 'center'
 				valign: 'middle'    
 				bold: True
-				font_size: 32
+				font_size: 20
 				color: 1, 1, 1
 				size_hint_y: 0.1
 
 		MDBoxLayout:
-			id: layout_title
+			id: layout_dashboard
 			orientation: "vertical"
-			size_hint: 1, 0.75
+			size_hint: 1, 0.85
 
 			MDBoxLayout:
-				id: layout_graph
+				id: layout_gauge
 				md_bg_color: app.theme_cls.accent_color
-				size_hint: 1, 0.6
+				size_hint: 1, 0.5
 
 			MDBoxLayout:
-				id: layout_title
+				id: layout_variables
 				md_bg_color: app.theme_cls.accent_color
 				orientation: "horizontal"
-				size_hint: 1, 0.4
+				size_hint: 1, 0.25
 
 				MDGridLayout:
-					id: layout_dashboard
 					cols:2
 					row_force_default: True
-					row_default_height: 20
+					row_default_height: 15
 					md_bg_color: app.theme_cls.accent_color
-					padding:20
+					padding:40
 					spacing:10
 
 					MDLabel:
@@ -106,7 +105,7 @@
 						font_size: 15
 
 					MDLabel:
-						text: "Speed SOurce"
+						text: "Speed Source"
 						halign: 'left'
 						valign: 'middle'    
 						bold: True
@@ -170,7 +169,7 @@
 					row_force_default: True
 					row_default_height: 20
 					md_bg_color: app.theme_cls.accent_color
-					padding:20
+					padding:80
 					spacing:10
 
 					MDLabel:
@@ -194,3 +193,57 @@
 						valign: 'middle'    
 						bold: True
 						font_size: 15
+
+			MDBoxLayout:
+				orientation: "horizontal"
+				size_hint: 1, 0.25
+				
+				MDBoxLayout:
+					id: layout_graph
+					md_bg_color: app.theme_cls.accent_color
+					size_hint: 0.7, 1
+
+				MDGridLayout:
+					cols:2
+					size_hint: 0.3, 1
+					# row_force_default: True
+					# row_default_height: 25
+					md_bg_color: app.theme_cls.accent_color
+					padding:60, 5
+					spacing:40, 5
+
+					MDLabel:
+						text: "OFF / ON"
+						halign: 'center'
+						valign: 'middle'    
+						bold: True
+						font_size: 15
+
+					MDLabel:
+						text: "HAND / AUTO"
+						halign: 'center'
+						valign: 'middle'    
+						bold: True
+						font_size: 15
+
+					MDSwitch:
+						id: switch_on_off
+						size_hint_x: 0.2
+
+					MDSwitch:
+						id: switch_hand_auto
+						size_hint_x: 0.2
+
+					MDRoundFlatButton:
+						id: button_start
+						text: "START"
+						size_hint: 0.4, 0.5
+						text_color: "FFFFFF"
+						md_bg_color: "00AA00"
+
+					MDRoundFlatButton:
+						id: button_stop
+						text: "STOP"
+						size_hint: 0.4, 0.5
+						text_color: "FFFFFF"
+						md_bg_color: "AA0000"

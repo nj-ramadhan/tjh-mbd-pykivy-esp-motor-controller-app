@@ -34,12 +34,12 @@
             orientation: "horizontal"
             padding: 15
 			spacing: 15
-			size_hint: 1, 0.15
+			size_hint: 1, 0.08
 
 			MDIconButton:
 				id: bt_menu
 				icon: "menu"
-				icon_size: "54sp"
+				icon_size: "25sp"
 				size_hint_x: 0.1
 				on_press: root.nav_main_menu()
 
@@ -49,7 +49,7 @@
 				halign: 'center'
 				valign: 'middle'
 				bold: True
-				font_size: 42
+				font_size: 30
 				color: 0, 0, 0
                     
             Image:
@@ -63,7 +63,7 @@
 			id: layout_title
 			orientation: "vertical"
 			md_bg_color: app.theme_cls.primary_color
-			size_hint: 1, 0.1
+			size_hint: 1, 0.07
 			padding:10
 			spacing:10
 
@@ -72,7 +72,7 @@
 				halign: 'center'
 				valign: 'middle'    
 				bold: True
-				font_size: 32
+				font_size: 20
 				color: 1, 1, 1
 				size_hint_y: 0.1
 				
@@ -81,6 +81,7 @@
 			cols:4
 			rows:2
 			md_bg_color: app.theme_cls.accent_color
+			size_hint: 1, 0.85
 			padding:10
 			spacing:10
 

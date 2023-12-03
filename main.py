@@ -378,16 +378,27 @@ class ScreenDashboard(MDBoxLayout):
         self.fig.set_facecolor("#eeeeee")
         self.fig.set_alpha(0.0)
 
-        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=2, title='Frequency [Hz]', ax=self.ax0)
-        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=3, title='Motor Amp [A]', ax=self.ax1)
-        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=1, title='Voltage [V]', ax=self.ax2)
-        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=1, title='Voltage Unbal [%]', ax=self.ax3)
-        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=2, title='Current Unbal [%]', ax=self.ax4)
-        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=3, title='Intake Press [psi]', ax=self.ax5)
-        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=3, title='Dischrg Press [psi]', ax=self.ax6)
-        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#ED1C24', '#006300','#006300','#006300','#ED1C24'], arrow=3, title='Motor Temp [F]', ax=self.ax7)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#AA0000', '#00AA00','#00AA00','#00AA00','#AA0000'], arrow=2, title='Frequency [Hz]', ax=self.ax0)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#AA0000', '#00AA00','#00AA00','#00AA00','#AA0000'], arrow=3, title='Motor Amp [A]', ax=self.ax1)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#AAAA00', '#00AA00','#00AA00','#00AA00','#AAAA00'], arrow=1, title='Voltage [V]', ax=self.ax2)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#AA0000', '#00AA00','#00AA00','#00AA00','#AA0000'], arrow=1, title='Voltage Unbal [%]', ax=self.ax3)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#AA0000', '#00AA00','#00AA00','#00AA00','#AA0000'], arrow=2, title='Current Unbal [%]', ax=self.ax4)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#AA0000', '#00AA00','#00AA00','#00AA00','#AA0000'], arrow=3, title='Intake Press [psi]', ax=self.ax5)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#AAAA00', '#00AA00','#00AA00','#00AA00','#AAAA00'], arrow=3, title='Dischrg Press [psi]', ax=self.ax6)
+        self.gauge(labels=['LOLO','LO','NORMAL','HI','HIHI'], colors=['#AAAA00', '#00AA00','#00AA00','#00AA00','#AAAA00'], arrow=3, title='Motor Temp [F]', ax=self.ax7)
         
-        self.ids.layout_graph.add_widget(FigureCanvasKivyAgg(self.fig))        
+        self.ids.layout_gauge.add_widget(FigureCanvasKivyAgg(self.fig))        
+
+
+
+        self.fig_graph, self.ax = plt.subplots()
+        self.fig_graph.set_facecolor("#eeeeee")
+        self.fig_graph.set_alpha(0.0)
+        x = np.linspace(1, 100) 
+        y = x * np.random.random_sample((50,))
+        self.ax.plot(x, y)
+
+        self.ids.layout_graph.add_widget(FigureCanvasKivyAgg(self.fig_graph))     
 
     def nav_main_menu(self):
         self.screen_manager.current = 'screen_main_menu'
@@ -420,6 +431,10 @@ class ScreenParameterAlarm(MDBoxLayout):
 
     def gauge(self, labels, colors, arrow, title, ax):
         N = len(labels)
+        # N=100
+        # colors[:20] = '#ED1C24'
+        # colors[:-20] = '#ED1C24'
+        # colors[19:-19] = '#006300'
         
         if arrow > N: 
             raise Exception("\n\nThe category ({}) is greated than \
