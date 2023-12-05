@@ -54,12 +54,185 @@
 				
 		MDGridLayout:
 			id: layout_products
-			cols:3
+			cols:5
 			md_bg_color: app.theme_cls.accent_color
-			row_force_default: True
-			row_default_height: 200
-			size_hint: 1, 0.75
+			# row_force_default: True
+			# row_default_height: 200
+			# size_hint: 1, 0.75
 			padding:20
 			spacing:20
+
+			MDBoxLayout:
+				orientation: 'vertical'
+				padding: 15
+				radius: 10
+				line_color: 0.2, 0.2, 0.2, 0.8
+				MDTextField:
+					hint_text: "WELLNAME"
+					# max_height: "10dp"
+					hint_text_color_normal: "#A9A9A9"
+					hint_text_color_focus: "#A9A9A9"
+					text_color_normal: "#093824"
+					text_color_focus: "#093824"
+					# mode: "rectangle"
+				MDTextField:
+					hint_text: "PUMP TYPE"
+					# max_height: "10dp"
+					hint_text_color_normal: "#A9A9A9"
+					hint_text_color_focus: "#A9A9A9"
+					text_color_normal: "#093824"
+					text_color_focus: "#093824"
+					# mode: "rectangle"
+				MDTextField:
+					hint_text: "MOTOR FULL AMP"
+					# max_height: "10dp"
+					hint_text_color_normal: "#A9A9A9"
+					hint_text_color_focus: "#A9A9A9"
+					text_color_normal: "#093824"
+					text_color_focus: "#093824"
+					# mode: "rectangle"
+				MDGridLayout:
+					cols: 2
+					MDLabel:
+						text: "Unit Preferences"
+						color : '#A9A9A9'
+						valign: "top"
+					MDBoxLayout:
+						orientation: 'vertical'
+						MDGridLayout:
+							cols: 2
+							CheckBox:
+								active: True
+								group: 'flowrate'
+								color: '#000000'
+							MDLabel:
+								text:"BPD"
+								color : '#093824'
+							CheckBox:
+								group: 'flowrate'
+								color: '#000000'
+							MDLabel:
+								text:"m3/d"
+								color : '#093824'
+							
+							CheckBox:
+								active: True
+								group: 'temperature'
+								color: '#000000'
+							MDLabel:
+								text:"C"
+								color : '#093824'
+							CheckBox:
+								group: 'temperature'
+								color: '#000000'
+							MDLabel:
+								text:"F"
+								color : '#093824'
+							
+							CheckBox:
+								group: 'pressure'
+								color: '#000000'
+							MDLabel:
+								text:"bar"
+								color : '#093824'
+							CheckBox:
+								group: 'pressure'
+								color: '#000000'
+							MDLabel:
+								active: True
+								text:"psi"
+								color : '#093824'
+
+			MDBoxLayout:
+				orientation: 'vertical'
+				spacing: 15
+				MDBoxLayout:
+					orientation: 'vertical'
+					padding: 15,5
+					radius: 10
+					line_color: 0.2, 0.2, 0.2, 0.8
+					size_hint_y: .2
+
+					MDTextField:
+						hint_text: "General Restart Delay"
+						# max_height: "10dp"
+						hint_text_color_normal: "#A9A9A9"
+						hint_text_color_focus: "#A9A9A9"
+						text_color_normal: "#093824"
+						text_color_focus: "#093824"
+						# mode: "rectangle"
+				
+				MDBoxLayout:
+					orientation: 'vertical'
+					padding: 15, 5
+					radius: 10
+					line_color: 0.2, 0.2, 0.2, 0.8
+
+					MDTextField:
+						hint_text: "General Restart Time"
+						# max_height: "10dp"
+						hint_text_color_normal: "#A9A9A9"
+						hint_text_color_focus: "#A9A9A9"
+						text_color_normal: "#093824"
+						text_color_focus: "#093824"
+						# mode: "rectangle"
+
+					MDTextField:
+						hint_text: "Lock Out Clear Time"
+						# max_height: "10dp"
+						hint_text_color_normal: "#A9A9A9"
+						hint_text_color_focus: "#A9A9A9"
+						text_color_normal: "#093824"
+						text_color_focus: "#093824"
+						# mode: "rectangle"
+
+					MDTextField:
+						hint_text: "Progressive start delay"
+						# max_height: "10dp"
+						hint_text_color_normal: "#A9A9A9"
+						hint_text_color_focus: "#A9A9A9"
+						text_color_normal: "#093824"
+						text_color_focus: "#093824"
+						# mode: "rectangle"
+
+					MDTextField:
+						hint_text: "Staggering Start Add Delay"
+						# max_height: "10dp"
+						hint_text_color_normal: "#A9A9A9"
+						hint_text_color_focus: "#A9A9A9"
+						text_color_normal: "#093824"
+						text_color_focus: "#093824"
+						# mode: "rectangle"
+
+					MDLabel:
+			
+				MDBoxLayout:
+					size_hint_y: .2
+			
+			MDBoxLayout:
+				orientation: 'vertical'
+				spacing: 15
+				MDBoxLayout:
+					orientation: 'vertical'
+					padding: 15,5
+					radius: 10
+					line_color: 0.2, 0.2, 0.2, 0.8
+					size_hint_y: .2
+
+					MDTextField:
+						hint_text: "Wait from restart time"
+						# max_height: "10dp"
+						hint_text_color_normal: "#A9A9A9"
+						hint_text_color_focus: "#A9A9A9"
+						text_color_normal: "#093824"
+						text_color_focus: "#093824"
+						# mode: "rectangle"
+
+					MDLabel:
+				
+				MDLabel:
+
+			MDBoxLayout:
+
 
 				
